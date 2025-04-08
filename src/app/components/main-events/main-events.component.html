@@ -1,0 +1,10 @@
+<!-- Do NOT delete -->
+<div class="invisible h-fit p-3 mt-6 text-2xl font-bold">
+    {{eraTitle ?? "Placeholder"}}
+</div>
+
+<div class="flex flex-col mx-10 items-center overflow-y-auto hide-scrollbars h-3/4">
+    @for (event of events; track event.id) {
+        <app-main-event [event]="event"></app-main-event>
+    }
+</div>

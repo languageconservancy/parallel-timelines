@@ -1,0 +1,27 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  [attr.width]="size"
+  [attr.height]="size"
+  fill="none"
+  viewBox="0 0 24 24"
+  [class.rotate-180]="direction === 'left'"
+  class="transition-transform cursor-pointer select-none pointer-events-auto"
+>
+  <!-- Outline -->
+  <path
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="6"
+    [attr.stroke]="outlineColor"
+    d="M9 5l7 7-7 7"
+  />
+
+  <!-- Main arrow -->
+  <path
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="4"
+    [attr.stroke]="color"
+    d="M9 5l7 7-7 7"
+  />
+</svg>

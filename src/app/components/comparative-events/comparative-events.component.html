@@ -1,0 +1,37 @@
+<div class="w-full h-full flex flex-col">
+
+    <!-- Timeline bar: row 1 -->
+    <div class="bg-gray-800 text-white text-sm font-mono flex justify-evenly h-10 select-none">
+        <!-- Center text -->
+        @for (event of events; track event.id) {
+            <div class="flex items-center justify-center w-full text-center">
+                {{ event.date }}
+            </div>
+        }
+    </div>
+
+    <div class="h-full overflow-y-auto hide-scrollbars"
+        [ngStyle]="{
+            'background-color': background?.color ?? 'transparent',
+        }"
+    >
+        <div class="grid h-full"
+            [ngStyle]="{
+                'grid-template-columns': 'repeat(' + events.length + ', minmax(0, 1fr))'
+            }"
+        >
+
+        <!-- Timeline bar: row 1 -->
+        @for (event of events; track event.id) {
+            <div class="flex flex-col items-center h-full select-none">
+                <!-- Vertical line below date -->
+                <div>{{"|"}}</div>
+
+                <!-- Event info -->
+                <div class="w-full pb-4 flex flex-col items-center">
+                    <app-comparative-event [event]="event"></app-comparative-event>
+                </div>
+            </div>
+        }
+    </div>
+</div>

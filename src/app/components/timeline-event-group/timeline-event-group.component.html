@@ -1,0 +1,18 @@
+<div class="flex flex-col h-screen">
+    @if (group.mainEvents.length > 0) {
+        <!-- Main events -->
+        <div class="h-3/4 min-h-0">
+            <app-main-events [events]="group.mainEvents" [eraTitle]="eraTitle" />
+        </div>
+    }
+
+    <!-- Comparative Events -->
+    @if (group.comparativeEvents.length > 0) {
+        <div class="h-1/4">
+            <app-comparative-events
+                [events]="group.comparativeEvents"
+                [background]="group.comparativeEventsBackground"
+            />
+        </div>
+    }
+</div>

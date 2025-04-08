@@ -1,0 +1,58 @@
+<!-- Fixed era layout -->
+<div class="fixed w-screen h-screen z-10">
+    @if (currentEra().type === 'titlePage') {
+        <!-- Centered title -->
+        <div #eraTitleRef class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-3 rounded-xl bg-white/75 text-blue-900 font-bold text-6xl pointer-events-none"
+            [innerHTML]="currentEra().title?.headline"
+        >
+        </div>
+    } @else {
+        <!-- Era Title -->
+        <div #eraTitleRef class="absolute top-4 left-4 md:top-6 md:left-6 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-lg md:text-2xl pointer-events-none"
+            [innerHTML]="currentEra().title?.headline"
+        >
+        </div>
+    }
+
+    <!-- For title pages -->
+    <app-background
+        [eraType]="currentEra().type"
+        [singleBackground]="currentEra().singleBackground"
+        [mainEventsBackground]="currentEra().mainEventsBackground"
+        [comparativeEventsBackground]="currentEra().comparativeEventsBackground"
+    />
+
+</div>
+<app-bottom-drawer
+    [currentEraIndex]="currentEra().id"
+    [eras]="drawerCards"
+    (eraClicked)="onDrawerEraClick($event)"
+/>
+
+<!-- Left and right arrows -->
+@if (currentFlatGroupIndex() > 0) {
+    <app-arrow
+        (click)="onArrowClick('left')"
+        [direction]="'left'"
+        class="absolute top-1/2 left-1 md:left-6 transform -translate-y-1/2 z-50"
+    />
+}
+@if (currentFlatGroupIndex() < flattendEventGroups.length - 1) {
+    <app-arrow
+        (click)="onArrowClick('right')"
+        [direction]="'right'"
+        class="absolute top-1/2 right-1 md:right-6 transform -translate-y-1/2 z-50"
+    />
+}
+
+<!-- Scrollable timeline (event groups) -->
+<div #timelineScrollRef
+    class="flex flex-row w-screen h-screen overflow-x-scroll overflow-y-hidden hide-scrollbars snap-x snap-mandatory scroll-smooth relative z-20"
+    (scroll)="onTimelineScroll($event)"
+>
+    @for (group of flattendEventGroups; track group.id) {
+        <div class="w-screen h-screen flex flex-col snap-start flex-shrink-0">
+            <app-timeline-event-group [group]="group" [eraTitle]="currentEra().title?.headline" id="group-{{currentFlatGroupIndex()}}" />
+        </div>
+    }
+</div>

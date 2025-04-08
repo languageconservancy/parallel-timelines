@@ -1,0 +1,25 @@
+<div class="absolute inset-0 -z-20 pointer-events-none overflow-hidden">
+    <!-- Previous backgrounds -->
+    <div class="absolute top-0 left-0 w-full"
+        [ngClass]="{
+            'h-full': eraType === 'titlePage',
+            'h-3/4': eraType !== 'titlePage',
+        }">
+        <!-- Previous -->
+        <div
+            class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+            [style.opacity]="'1'"
+            [style.backgroundImage]="'url(' + (eraType === 'titlePage' ? singleBackground?.url : mainEventsBackground?.url) + ')'"
+        ></div>
+    </div>
+
+    @if (eraType !== 'titlePage') {
+        <div class="absolute bottom-0 left-0 w-full h-1/4">
+            <div
+                class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+                [style.opacity]="'1'"
+                [style.backgroundImage]="'url(' + comparativeEventsBackground + ')'"
+            ></div>
+        </div>
+    }
+</div>

@@ -1,0 +1,6 @@
+@if (event) {
+    <div class="my-2 bg-white/90 text-blue-900 text-xs md:text-sm lg:text-base font-semibold p-3 md:p-4 max-w-prose w-full shadow-md rounded-lg select-none">
+        <h3 class="font-bold">{{event.date}}</h3>
+        <div [innerHTML]="event.text.text"></div>
+    </div>
+}
