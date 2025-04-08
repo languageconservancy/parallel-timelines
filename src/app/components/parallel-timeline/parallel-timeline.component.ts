@@ -62,7 +62,7 @@ export class ParallelTimelineComponent implements AfterViewInit {
     constructor(private http: HttpClient) {}
 
     ngAfterViewInit(): void {
-        this.http.get('tales/tale-custom.json').subscribe({
+        this.http.get('timelines/timeline.json').subscribe({
             next: (data: any) => {
                 data = this.setIds(data);
                 this.setFlattendEventGroups(data);
