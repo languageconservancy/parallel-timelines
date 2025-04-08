@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "swipe-tale": {
+        "parallel-timelines": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:application",
                     "options": {
-                        "outputPath": "dist/swipe-tale",
+                        "outputPath": "dist/parallel-timelines",
                         "index": "src/index.html",
                         "browser": "src/main.ts",
                         "polyfills": [
@@ -65,10 +65,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "buildTarget": "swipe-tale:build:production"
+                            "buildTarget": "parallel-timelines:build:production"
                         },
                         "development": {
-                            "buildTarget": "swipe-tale:build:development"
+                            "buildTarget": "parallel-timelines:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
