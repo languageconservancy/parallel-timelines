@@ -8,7 +8,7 @@
         </div>
     } @else {
         <!-- Era Title -->
-        <div #eraTitleRef class="absolute top-4 left-4 md:top-6 md:left-6 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-lg md:text-2xl pointer-events-none"
+        <div #eraTitleRef class="absolute top-safe left-4 md:left-6 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-lg md:text-2xl pointer-events-none"
             [innerHTML]="currentEra().title?.headline"
         >
         </div>
@@ -47,7 +47,7 @@
 
 <!-- Scrollable timeline (event groups) -->
 <div #timelineScrollRef
-    class="flex flex-row w-screen h-screen overflow-x-scroll overflow-y-hidden hide-scrollbars snap-x snap-mandatory scroll-smooth relative z-20"
+    class="flex flex-row w-screen h-screen overflow-x-scroll overflow-y-hidden hide-scrollbars snap-x snap-mandatory scroll-smooth relative z-20 swipe-zone"
     (scroll)="onTimelineScroll($event)"
 >
     @for (group of flattendEventGroups; track group.id) {

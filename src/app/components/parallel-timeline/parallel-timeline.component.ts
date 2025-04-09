@@ -36,11 +36,7 @@ import { BottomDrawerComponent } from "../bottom-drawer/bottom-drawer.component"
  * - Media: Images, videos, audio, etc.
  *    - type: type of media (image, video, audio)
  *    - url: URL of the media
- * - Navbar: Navigation bar for the timeline
- *    - items: title of the timeline
- * - Navbar Item: Individual items in the navigation bar
- *    - title: title of the item
- *    - image: image associated with the item
+ * - Bottom Drawer: Navigation bar for the timeline
  */
 export class ParallelTimelineComponent implements AfterViewInit {
     public flattendEventGroups: TimelineFlattenedEventGroup[] = [];
@@ -58,9 +54,15 @@ export class ParallelTimelineComponent implements AfterViewInit {
     public drawerCards: DrawerCard[] = [];
     @ViewChild('eraTitleRef') eraTitleRef!: ElementRef<HTMLDivElement>;
     @ViewChild('timelineScrollRef') timelineScrollRef!: ElementRef<HTMLDivElement>;
+    private scrollTimeout?: number = 0;
 
     constructor(private http: HttpClient) {}
 
+    /**
+     * Lifecycle hook that is called after the component's view has been fully initialized.
+     * This is where we load the timeline data and set up the event groups.
+     * It also sets up the scroll event listener for the timeline.
+     */
     ngAfterViewInit(): void {
         this.http.get('timelines/timeline.json').subscribe({
             next: (data: any) => {
@@ -77,12 +79,21 @@ export class ParallelTimelineComponent implements AfterViewInit {
             }
         });
 
-        const el = this.timelineScrollRef.nativeElement;
-        el.addEventListener('scrollend', () => {
-            this.isProgrammaticScroll = false;
+        this.timelineScrollRef.nativeElement.addEventListener('scroll', (event) => {
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = window.setTimeout(() => {
+                console.debug('scroll done');
+                this.isProgrammaticScroll = false;
+            }, 100); // Adjust this timeout for sensitivity (100-300ms is usually good)
         })
     }
 
+    /**
+     * Set the flattend event groups based on the timeline data.
+     * This function flattens the event groups into a single array, which is used for
+     * displaying the timeline.
+     * @param {TimelineDate} timeline - The timeline data
+     */
     setFlattendEventGroups(timeline: TimelineData) {
         if (!timeline) {
             return;
@@ -119,6 +130,11 @@ export class ParallelTimelineComponent implements AfterViewInit {
         console.debug("Flattend event groups:", this.flattendEventGroups);
     }
 
+    /**
+     * Set IDs for the timeline data.
+     * @param data - The timeline data
+     * @returns The timeline data with IDs set
+     */
     setIds(data: TimelineData) {
         let eraId = 0;
         let groupId = 0;
@@ -144,6 +160,10 @@ export class ParallelTimelineComponent implements AfterViewInit {
         return data;
     }
 
+    /**
+     * Create the drawer cards based on the timeline data, to be used by the child component.
+     * @param {TimelineData} timeline - The timeline data
+     */
     createDrawerCards(timeline: TimelineData) {
         this.drawerCards = timeline.eras.map((era) => ({
             id: era.id ?? 0,
@@ -153,6 +173,33 @@ export class ParallelTimelineComponent implements AfterViewInit {
         }));
     }
 
+    /**
+     * Handle the swipe left event
+     * @param {Event} event: The swipe event
+     * @param {EventTarget} event.target: The element that was swiped
+     * @param {number} event.target.scrollLeft: The amount the element has been scrolled
+     */
+    onSwipeLeft(event: Event) {
+        console.debug("onSwipeLeft", event);
+    }
+
+    /**
+     * Handle the swipe right event
+     * @param {Event} event: The swipe event
+     * @param {EventTarget} event.target: The element that was swiped
+     * @param {number} event.target.scrollLeft: The amount the element has been scrolled
+     */
+    onSwipeRight(event: Event) {
+        console.debug("onSwipeRight", event);
+    }
+
+    /**
+     * Based on the scroll position of the timeline, update the current era to
+     * the one that is currently in view.
+     * @param {Event} event: The scroll event
+     * @param {EventTarget} event.target: The element that was scrolled
+     * @param {number} event.target.scrollLeft: The amount the element has been scrolled
+     */
     onTimelineScroll(event: Event) {
         if (!this.flattendEventGroups || this.isProgrammaticScroll) {
             return;
@@ -160,6 +207,7 @@ export class ParallelTimelineComponent implements AfterViewInit {
 
         // How far the user has scrolled
         const scrollLeft = (event.target as HTMLElement).scrollLeft;
+
         // Get width of an event group, which is the window width
         const groupWidth = window.innerWidth;
 
@@ -167,11 +215,16 @@ export class ParallelTimelineComponent implements AfterViewInit {
         const currentGroupIndex: number = Math.round(scrollLeft / groupWidth);
         const currentGroup: TimelineFlattenedEventGroup = this.flattendEventGroups?.[currentGroupIndex];
 
-        if (currentGroup && currentGroup.eraId !== this.currentEra().id) {
+        if (currentGroup && currentGroupIndex !== this.currentFlatGroupIndex()) {
+            console.debug("onScroll, going from group ", this.currentFlatGroupIndex(), " -> ", currentGroupIndex);
             this.updateCurrentFlatGroup(currentGroupIndex);
         }
     }
 
+    /**
+     * Update the current era based on the index of the event group
+     * @param {number} index - The index of the event group
+     */
     updateCurrentFlatGroup(index: number) {
         const eventGroup = this.flattendEventGroups?.[index];
         if (!eventGroup) {
@@ -192,6 +245,10 @@ export class ParallelTimelineComponent implements AfterViewInit {
         this.currentFlatGroupIndex.set(index);
     }
 
+    /**
+     * Handle the click event for the left and right arrows
+     * @param {string} direction - The direction to scroll in, either 'left' or 'right'
+     */
     onArrowClick(direction: 'left' | 'right') {
         if (!this.flattendEventGroups) {
             return;
@@ -200,10 +257,15 @@ export class ParallelTimelineComponent implements AfterViewInit {
         const newGroupIndex = direction === 'left'
             ? Math.max(this.currentFlatGroupIndex() - 1, 0)
             : Math.min(this.currentFlatGroupIndex() + 1, this.flattendEventGroups.length - 1);
+        console.debug("Going from group ", this.currentFlatGroupIndex(), " -> ", newGroupIndex);
         this.updateCurrentFlatGroup(newGroupIndex);
         this.scrollToGroup(newGroupIndex);
     }
 
+    /**
+     * Scroll to the specified event group by index.
+     * @param {number} index - The index of the event group to scroll to
+     */
     scrollToGroup(index: number) {
         this.isProgrammaticScroll = true;
 
@@ -214,6 +276,10 @@ export class ParallelTimelineComponent implements AfterViewInit {
         });
     }
 
+    /**
+     * Handle the click event for the drawer cards
+     * @param {number} index - The index of the drawer card that was clicked
+     */
     onDrawerEraClick(index: number) {
         if (!this.flattendEventGroups) {
             return;

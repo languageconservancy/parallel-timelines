@@ -1,5 +1,5 @@
 import {
-    Component, Input, Output, EventEmitter, ViewChild, ElementRef, SimpleChanges, AfterViewChecked,
+    Component, Input, Output, EventEmitter, ViewChild, ElementRef, SimpleChanges,
     HostListener, AfterViewInit, NgZone, QueryList, ViewChildren, OnChanges,
     ChangeDetectorRef,
 } from '@angular/core';
@@ -13,7 +13,7 @@ import { DrawerCard } from 'app/models/timeline.model';
     templateUrl: './bottom-drawer.component.html',
     styleUrl: './bottom-drawer.component.scss'
 })
-export class BottomDrawerComponent implements OnChanges, AfterViewChecked, AfterViewInit {
+export class BottomDrawerComponent implements OnChanges, AfterViewInit {
     // This component is used to display the bottom drawer of the timeline
     // It contains a horizontally scrollable list of items where each item
     // represents a timeline era (title and background image)
@@ -37,11 +37,9 @@ export class BottomDrawerComponent implements OnChanges, AfterViewChecked, After
     constructor(private cdr: ChangeDetectorRef) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        this.scrollToEraButton(this.currentEraIndex);
-    }
-
-    ngAfterViewChecked() {
-        this.scrollToEraButton(this.currentEraIndex);
+        if (changes['currentEraIndex'] && !changes['currentEraIndex'].firstChange) {
+            this.scrollToEraButton(this.currentEraIndex);
+        }
     }
 
     ngAfterViewInit(): void {
@@ -87,6 +85,7 @@ export class BottomDrawerComponent implements OnChanges, AfterViewChecked, After
         if (eraIndex === undefined || eraIndex === null) {
             return;
         }
+        console.debug("scrollToEraButton", eraIndex);
         // This method is called to scroll to the clicked era
         // It sets the current era index to the index of the clicked era
         const drawer = this.drawerScrollRef.nativeElement as HTMLElement;
@@ -148,8 +147,6 @@ export class BottomDrawerComponent implements OnChanges, AfterViewChecked, After
         this.drawerWidth = `${drawerWidth}px`;
         this.leftPadding = `${leftPadding}px`;
         this.rightPadding = `${rightPadding}px`;
-
-        console.debug('leftPadding', this.leftPadding, 'rightPadding', this.rightPadding, 'drawerWidth', this.drawerWidth);
 
         this.cdr.detectChanges();
     }
