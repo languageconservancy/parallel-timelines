@@ -1,5 +1,10 @@
 @use "tailwindcss";
 
+html, body {
+    overscroll-behavior-x: contain; /* Prevents bouncing */
+    touch-action: pan-x; /* Enable horizontal swipe */
+}
+
 .hide-scrollbars {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* Internet Explorer and Edge */
