@@ -5,12 +5,15 @@
     </div>
 } @else {
     <!-- Underlay below button so tapping any near bottom will open drawer -->
-    <div class="fixed h-1/12 bottom-0 w-full z-40 bg-transparent" (click)="openDrawer()"></div>
+    <div class="fixed h-[5rem] bottom-0 w-full z-40 bg-transparent" (click)="openDrawer()"
+        style="padding-bottom: env(safe-area-inset-bottom);"
+    ></div>
 }
 
 <div
-    class="fixed bottom-safe left-0 z-50 w-full h-[4rem] bg-black/60 border-t border-gray-400 dark:bg-gray-700 dark:border-gray-600 ease-in-out duration-300"
+    class="fixed left-0 z-50 w-full h-[4rem] bg-black/60 border-t border-gray-400 dark:bg-gray-700 dark:border-gray-600 ease-in-out duration-300"
     [ngClass]="{ 'translate-y-0': isOpen, 'translate-y-full': !isOpen }"
+    style="bottom: env(safe-area-inset-bottom);"
 >
     <!-- Top arrow button -->
     <div (click)="isOpen ? closeDrawer() : openDrawer()" class="border-t-1 border-x-1 border-slate-400 rounded-t-lg absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full w-20">

@@ -1,1 +1,6 @@
 <app-parallel-timeline class="bg-black"/>
+<!-- Cover bottom safe inset area with black strip so we can move
+    the drawer up, to account for the safe area, without it being visible -->
+<div class="fixed w-screen z-50 bottom-0 bg-black"
+    style="height: env(safe-area-inset-bottom);"
+></div>

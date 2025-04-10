@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BottomNavComponent } from './bottom-drawer.component';
+import { BottomDrawerComponent } from './bottom-drawer.component';
 
 describe('BottomNavComponent', () => {
-  let component: BottomNavComponent;
-  let fixture: ComponentFixture<BottomNavComponent>;
+  let component: BottomDrawerComponent;
+  let fixture: ComponentFixture<BottomDrawerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BottomNavComponent]
+      imports: [BottomDrawerComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BottomNavComponent);
+    fixture = TestBed.createComponent(BottomDrawerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
