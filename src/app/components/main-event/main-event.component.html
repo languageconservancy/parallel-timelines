@@ -1,6 +1,19 @@
 @if (event) {
     <div class="my-2 bg-white/90 text-blue-900 text-sm md:text-base lg:text-lg font-semibold p-4 max-w-prose w-full shadow-md rounded-lg select-none">
         <h3 class="font-bold">{{event.date}}</h3>
-        <div [innerHTML]="event.text.text"></div>
+        <!-- Image on left, text on the right -->
+        <div class="flex flex-row">
+            @if (event.image) {
+                <div class="flex-shrink-0">
+                    <img
+                        [src]="event.image.url"
+                        class="w-32 md:w-48 mr-3 mb-3 h-auto rounded-lg shadow-md"
+                        [alt]="event.image.caption"
+                    />
+                </div>
+            }
+            <div [innerHTML]="event.text.text">
+            </div>
+        </div>
     </div>
 }

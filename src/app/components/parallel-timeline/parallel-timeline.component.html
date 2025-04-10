@@ -8,8 +8,9 @@
         </div>
     } @else {
         <!-- Era Title -->
-        <div #eraTitleRef class="absolute top-safe left-4 md:left-6 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-lg md:text-2xl pointer-events-none"
+        <div #eraTitleRef class="absolute left-4 md:left-6 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-lg md:text-2xl pointer-events-none"
             [innerHTML]="currentEra().title?.headline"
+            style="top: max(1.5rem, env(safe-area-inset-top));"
         >
         </div>
     }

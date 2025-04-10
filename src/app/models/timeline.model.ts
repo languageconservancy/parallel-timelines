@@ -26,6 +26,10 @@ export interface TimelineEvent {
         headline: string;
         text: string;
     };
+    image?: {
+        url: string;
+        caption?: string;
+    }
 }
 
 export interface TimelineBackground {

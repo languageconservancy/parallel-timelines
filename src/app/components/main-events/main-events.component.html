@@ -1,10 +1,14 @@
 <!-- Do NOT delete -->
-<div class="invisible h-fit p-3 mt-safe-offset-2 text-2xl font-bold">
-    {{eraTitle ?? "Placeholder"}}
-</div>
+<div class="flex flex-col pb-4 h-full">
+    <div class="invisible h-fit p-3 text-2xl font-bold"
+        style="margin-top: max(2.5rem, env(safe-area-inset-top));"
+    >
+        {{eraTitle ?? "Placeholder"}}
+    </div>
 
-<div class="flex flex-col mx-10 items-center overflow-y-auto hide-scrollbars h-3/4">
-    @for (event of events; track event.id) {
-        <app-main-event [event]="event"></app-main-event>
-    }
+    <div class="flex flex-col mx-10 items-center overflow-y-auto hide-scrollbars">
+        @for (event of events; track event.id) {
+            <app-main-event [event]="event"></app-main-event>
+        }
+    </div>
 </div>
