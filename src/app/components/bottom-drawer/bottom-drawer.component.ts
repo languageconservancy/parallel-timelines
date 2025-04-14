@@ -47,6 +47,62 @@ export class BottomDrawerComponent implements OnChanges, AfterViewInit {
             this.calculateSidePadding();
             this.scrollToEraButton(this.currentEraIndex);
         });
+
+        this.enableHorizontalScrollOnMouseWheel();
+        this.enableDragScroll();
+    }
+
+    private enableHorizontalScrollOnMouseWheel() {
+        const drawerScrollEl = this.drawerScrollRef.nativeElement as HTMLElement;
+        if (!drawerScrollEl) {
+            console.warn('No drawer scroll ref found');
+            return;
+        }
+        drawerScrollEl.addEventListener('wheel', (event: WheelEvent) => {
+            if (event.deltaY === 0) {
+                return;
+            }
+
+            event.preventDefault();
+            drawerScrollEl.scrollLeft += event.deltaY;
+        }, { passive: false });
+    }
+
+    private enableDragScroll() {
+        const drawerScrollEl = this.drawerScrollRef.nativeElement as HTMLElement;
+        if (!drawerScrollEl) {
+            console.warn('No drawer scroll ref found');
+            return;
+        }
+
+        let isDown = false;
+        let startX: number;
+        let scrollLeft: number;
+
+        drawerScrollEl.addEventListener('mousedown', (event: MouseEvent) => {
+            isDown = true;
+            drawerScrollEl.classList.add('dragging');
+            startX = event.pageX - drawerScrollEl.offsetLeft;
+            scrollLeft = drawerScrollEl.scrollLeft;
+        });
+
+        drawerScrollEl.addEventListener('mouseleave', () => {
+            isDown = false;
+            drawerScrollEl.classList.remove('dragging');
+        });
+
+        drawerScrollEl.addEventListener('mouseup', () => {
+            isDown = false;
+            drawerScrollEl.classList.remove('dragging');
+        });
+
+        drawerScrollEl.addEventListener('mousemove', (event: MouseEvent) => {
+            if (!isDown) return;
+            event.preventDefault();
+            const x = event.pageX - drawerScrollEl.offsetLeft;
+            const walk = (x - startX) * 2; // Adjust scroll speed
+            drawerScrollEl.scrollLeft = scrollLeft - walk;
+        });
     }
 
     public drawerTabClicked() {

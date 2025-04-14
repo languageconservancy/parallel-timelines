@@ -48,7 +48,7 @@
 
 <!-- Scrollable timeline (event groups) -->
 <div #timelineScrollRef
-    class="flex flex-row w-screen h-screen overflow-x-scroll overflow-y-hidden hide-scrollbars snap-x snap-mandatory scroll-smooth relative z-20 swipe-zone"
+    class="flex flex-row w-screen h-screen overflow-x-scroll overflow-y-hidden overscroll-x-contain hide-scrollbars snap-x snap-mandatory scroll-smooth relative z-20 swipe-zone"
     (scroll)="onTimelineScroll($event)"
 >
     @for (group of flattendEventGroups; track group.id) {
