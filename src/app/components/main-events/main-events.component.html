@@ -1,11 +1,20 @@
-<!-- Do NOT delete -->
 <div class="flex flex-col pb-4 h-full">
+    <!-- Placeholder to ensure we avoid the real era title -->
     <div class="invisible h-fit p-3 text-2xl font-bold"
         style="margin-top: max(2.5rem, env(safe-area-inset-top));"
     >
         {{eraTitle ?? "Placeholder"}}
     </div>
 
+    <!-- Main events title -->
+    @if (eventsTitle?.headline) {
+        <!-- Title for the main events -->
+        <div class="flex w-fit mx-auto justify-center items-center text-xl font-bold text-blue-900 bg-white/90 p-2 rounded-xl shadow-lg">
+            {{eventsTitle?.headline}}
+        </div>
+    }
+
+    <!-- Group of vertically stacked main events -->
     <div class="flex flex-col mx-10 items-center overflow-y-auto hide-scrollbars">
         @for (event of events; track event.id) {
             <app-main-event [event]="event"></app-main-event>

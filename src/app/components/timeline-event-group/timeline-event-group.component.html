@@ -2,7 +2,11 @@
     @if (group.mainEvents.length > 0) {
         <!-- Main events -->
         <div class="h-2/3 min-h-0">
-            <app-main-events [events]="group.mainEvents" [eraTitle]="eraTitle" />
+            <app-main-events
+                [events]="group.mainEvents"
+                [eventsTitle]="group.title"
+                [eraTitle]="eraTitle"
+            />
         </div>
     }
 

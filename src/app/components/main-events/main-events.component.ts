@@ -11,5 +11,6 @@ import { MainEventComponent } from '../main-event/main-event.component';
 })
 export class MainEventsComponent {
     @Input() events!: TimelineEvent[];
+    @Input() eventsTitle?: { headline?: string; };
     @Input() eraTitle?: string;
 }
