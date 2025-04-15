@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TimelineEvent } from 'app/models/timeline.model';
 import { MainEventComponent } from '../main-event/main-event.component';
@@ -13,4 +13,11 @@ export class MainEventsComponent {
     @Input() events!: TimelineEvent[];
     @Input() eventsTitle?: { headline?: string; };
     @Input() eraTitle?: string;
+    @ViewChild('scrollRef') scrollRef!: ElementRef;
+
+    onChanges() {
+        if (this.scrollRef) {
+            this.scrollRef.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
 }

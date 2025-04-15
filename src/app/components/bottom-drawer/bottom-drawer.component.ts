@@ -141,7 +141,7 @@ export class BottomDrawerComponent implements OnChanges, AfterViewInit {
         if (eraIndex === undefined || eraIndex === null) {
             return;
         }
-        console.debug("scrollToEraButton", eraIndex);
+
         // This method is called to scroll to the clicked era
         // It sets the current era index to the index of the clicked era
         const drawer = this.drawerScrollRef.nativeElement as HTMLElement;

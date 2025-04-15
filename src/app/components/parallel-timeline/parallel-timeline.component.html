@@ -8,7 +8,7 @@
         </div>
     } @else {
         <!-- Era Title -->
-        <div #eraTitleRef class="absolute left-4 md:left-6 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-lg md:text-2xl pointer-events-none"
+        <div #eraTitleRef class="absolute left-4 md:left-6 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-2xl pointer-events-none"
             [innerHTML]="currentEra().title?.headline"
             style="top: max(1.5rem, env(safe-area-inset-top));"
         >
@@ -48,11 +48,15 @@
 
 <!-- Scrollable timeline (event groups) -->
 <div #timelineScrollRef
-    class="flex flex-row w-screen h-screen overflow-x-scroll overflow-y-hidden overscroll-x-contain hide-scrollbars snap-x snap-mandatory scroll-smooth relative z-20 swipe-zone"
+    class="flex flex-row w-screen h-screen overflow-y-hidden overscroll-x-contain hide-scrollbars snap-x snap-mandatory relative z-20"
+    [ngClass]="{
+        'overflow-x-auto touch-pan-x': !isMobileOrTablet,
+        'overflow-x-hidden touch-none': isMobileOrTablet
+    }"
     (scroll)="onTimelineScroll($event)"
 >
     @for (group of flattendEventGroups; track group.id) {
-        <div class="w-screen h-screen flex flex-col snap-start flex-shrink-0">
+        <div class="w-screen h-screen flex flex-col snap-center flex-shrink-0">
             <app-timeline-event-group [group]="group" [eraTitle]="currentEra().title?.headline" id="group-{{currentFlatGroupIndex()}}" />
         </div>
     }
