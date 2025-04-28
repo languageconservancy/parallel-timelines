@@ -46,7 +46,6 @@ export class ParallelTimelineComponent implements AfterViewInit {
     public currentEra: WritableSignal<TimelineEra> = signal({
         type: '',
         title: { headline: '' },
-        singleBackground: { url: '', color: '' },
         mainEventsBackground: { url: '', color: '' },
         comparativeEventsBackground: { url: '', color: '' },
         eventGroups: [],
@@ -256,7 +255,6 @@ export class ParallelTimelineComponent implements AfterViewInit {
                     eraId: era.id,
                     eraTitle: era.title,
                     type: "titlePage",
-                    singleBackground: era.singleBackground ?? undefined,
                     mainEventsBackground: era.mainEventsBackground ?? undefined,
                     comparativeEventsBackground: era.comparativeEventsBackground ?? undefined,
                     mainEvents: [],
@@ -269,7 +267,6 @@ export class ParallelTimelineComponent implements AfterViewInit {
                 eraId: era.id,
                 type: "eventGroups",
                 eraTitle: era.title,
-                singleBackground: era.singleBackground ?? undefined,
                 mainEventsBackground: era.mainEventsBackground ?? undefined,
                 comparativeEventsBackground: era.comparativeEventsBackground ?? undefined,
             }))
@@ -315,7 +312,7 @@ export class ParallelTimelineComponent implements AfterViewInit {
             id: era.id ?? 0,
             title: era.title?.headline ?? '',
             eventGroupIndex: this.flattendEventGroups.findIndex((group) => group.eraId === era.id),
-            background: era.singleBackground || era.mainEventsBackground || { url: '', color: '' },
+            background: era.mainEventsBackground || { url: '', color: '' },
         }));
     }
 
@@ -377,7 +374,6 @@ export class ParallelTimelineComponent implements AfterViewInit {
             id: eventGroup.eraId,
             type: eventGroup.type,
             title: eventGroup.eraTitle,
-            singleBackground: eventGroup.singleBackground,
             mainEventsBackground: eventGroup.mainEventsBackground,
             comparativeEventsBackground: eventGroup.comparativeEventsBackground,
             eventGroups: [],

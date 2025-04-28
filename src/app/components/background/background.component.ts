@@ -10,7 +10,6 @@ import { TimelineBackground } from 'app/models/timeline.model';
 })
 export class BackgroundComponent {
     @Input() eraType?: string = '';
-    @Input() singleBackground?: TimelineBackground = { url: '', color: '' };
     @Input() mainEventsBackground?: TimelineBackground = { url: '', color: '' };
     @Input() comparativeEventsBackground?: TimelineBackground = { url: '', color: '' };
 }

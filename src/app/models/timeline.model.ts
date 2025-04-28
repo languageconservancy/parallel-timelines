@@ -6,7 +6,6 @@ export interface TimelineEra {
     id?: number;
     type?: string;
     title?: { headline?: string },
-    singleBackground?: TimelineBackground,
     mainEventsBackground?: TimelineBackground,
     comparativeEventsBackground?: TimelineBackground,
     eventGroups: TimelineEventGroup[];
@@ -23,7 +22,7 @@ export interface TimelineEvent {
     id?: number;
     date: string;
     text: {
-        headline: string;
+        brief: string;
         text: string;
     };
     image?: TimelineEventImage;
@@ -32,6 +31,12 @@ export interface TimelineEvent {
 export interface TimelineBackground {
     url?: string;
     color?: string;
+}
+
+export interface TimelineEventImage {
+    url: string;
+    caption?: string;
+    position?: string
 }
 
 export interface TimelineFlattenedEventGroup {
@@ -45,12 +50,6 @@ export interface TimelineFlattenedEventGroup {
     title?: { headline?: string };
     mainEvents: TimelineEvent[];
     comparativeEvents: TimelineEvent[];
-}
-
-export interface TimelineEventImage {
-    url: string;
-    caption?: string;
-    position?: string
 }
 
 export interface DrawerCard {
