@@ -26,10 +26,7 @@ export interface TimelineEvent {
         headline: string;
         text: string;
     };
-    image?: {
-        url: string;
-        caption?: string;
-    }
+    image?: TimelineEventImage;
 }
 
 export interface TimelineBackground {
@@ -48,6 +45,12 @@ export interface TimelineFlattenedEventGroup {
     title?: { headline?: string };
     mainEvents: TimelineEvent[];
     comparativeEvents: TimelineEvent[];
+}
+
+export interface TimelineEventImage {
+    url: string;
+    caption?: string;
+    position?: string
 }
 
 export interface DrawerCard {

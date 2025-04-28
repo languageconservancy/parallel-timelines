@@ -1,18 +1,40 @@
 @if (event) {
     <div class="my-2 bg-white/90 text-blue-900 text-sm md:text-base lg:text-lg font-semibold p-4 max-w-prose w-full shadow-md rounded-lg select-none">
-        <h3 class="font-bold text-center text-2xl">{{event.text.headline}}</h3>
         <!-- Image on left, text on the right -->
-        <div class="flex flex-col sm:flex-row">
+        <div class="flex"
+            [ngClass]="{
+                'flex-row': event.image && event.image.position === 'left',
+                'flex-row-reverse': event.image && event.image.position === 'right',
+                'flex-col justify-center items-center text-center': event.image && event.image.position === 'top',
+                'flex-col-reverse justify-center items-center text-center': event.image && event.image.position === 'bottom'
+            }">
             @if (event.image) {
-                <div class="flex-shrink-0">
-                    <img
-                        [src]="event.image.url"
-                        class="w-32 md:w-48 sm:mr-3 mb-3 h-auto rounded-lg shadow-md"
-                        [alt]="event.image.caption"
-                    />
-                </div>
+                <img
+                    [src]="event.image.url"
+                    [alt]="event.image.caption"
+                    class="rounded-lg shadow-md object-contain"
+                    [ngClass]="{
+                        'mr-2': event.image.position === 'left',
+                        'w-32': event.image.position === 'left' || event.image.position === 'right',
+                        'md:w-48': event.image.position === 'left' || event.image.position === 'right',
+                        'max-h-48': event.image.position === 'left' || event.image.position === 'right',
+                        'my-auto': event.image.position === 'left' || event.image.position === 'right',
+
+                        'ml-2': event.image.position === 'right',
+
+                        'mb-2': event.image.position === 'top',
+                        'max-w-48': event.image.position === 'top' || event.image.position === 'bottom',
+                        'max-h-32': event.image.position === 'top' || event.image.position === 'bottom',
+                        'md:max-h-48': event.image.position === 'top' || event.image.position === 'bottom',
+                        'mx-auto': event.image.position === 'top' || event.image.position === 'bottom',
+
+                        'mt-2': event.image.position === 'bottom',
+                      }"
+                />
             }
-            <div [innerHTML]="event.text.text">
+            <div class="">
+                <h3 class="font-bold text-center text-2xl">{{event.text.headline}}</h3>
+                <div [innerHTML]="event.text.text"></div>
             </div>
         </div>
     </div>
