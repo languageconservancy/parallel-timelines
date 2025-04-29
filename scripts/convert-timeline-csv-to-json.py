@@ -4,7 +4,6 @@ import argparse
 import os
 
 def convert_csv_to_json(input_file, output_file=None):
-    # Set default output filename if not provided
     if output_file is None:
         base_name = os.path.splitext(os.path.basename(input_file))[0]
         output_file = f"{base_name}_output.json"
@@ -16,14 +15,17 @@ def convert_csv_to_json(input_file, output_file=None):
     eras = []
     current_era = None
     current_group = None
+    last_era_title = None
+
+    # A flag to detect when we need to start a new event group
+    building_main = False
 
     for row in rows:
         era_title = row['Era Title'].strip()
-        group_title = row['Group Title'].strip()
         main_or_comparative = row['Main/Comparative'].strip()
 
-        # New era if needed
-        if not current_era or current_era['title']['headline'] != era_title:
+        # -- New era when Era Title changes --
+        if not current_era or era_title != last_era_title:
             current_era = {
                 'title': {'headline': era_title},
                 'mainEventsBackground': {},
@@ -38,45 +40,70 @@ def convert_csv_to_json(input_file, output_file=None):
                     'color': row['Comparative Background Color']
                 }
             eras.append(current_era)
-            current_group = None  # reset group at new era
+            current_group = None
+            last_era_title = era_title
+            building_main = False
 
-        # Some rows could just be era info without events
-        if not group_title and not main_or_comparative:
+        # Skip purely empty rows
+        if not main_or_comparative:
             continue
 
-        # New group if needed
-        if not current_group or current_group['title']['headline'] != group_title:
-            current_group = {
-                'title': {'headline': group_title},
-                'mainEvents': [],
-                'comparativeEvents': []
-            }
-            current_era['eventGroups'].append(current_group)
-
-        # Build event
-        print(row['Event Date'])
-        event = {
-            'date': row['Event Date'],
-            'text': {
-                'brief': row['Event Brief'],
-                'text': row['Event Text'],
-            }
-        }
-
-        # Add image if it exists
-        if row['Image URL']:
-            event['image'] = {
-                'url': row['Image URL'],
-                'caption': row['Image Caption'],
-                'position': row['Image left|right|top|bottom'],
-            }
-
+        # --- Grouping Logic ---
         if main_or_comparative == 'Main':
+            if not building_main:
+                # Start new eventGroup when a new main block starts
+                current_group = {
+                    'title': {'headline': row['Group Title'] or ''},  # (optional: generate a title if you want)
+                    'mainEvents': [],
+                    'comparativeEvents': []
+                }
+                current_era['eventGroups'].append(current_group)
+                building_main = True
+
+            event = {
+                'date': row['Event Date'],
+                'text': {
+                    # 'brief': row['Event Brief'],
+                    'text': row['Event Text'],
+                }
+            }
+            if row['Image URL']:
+                event['image'] = {
+                    'url': row['Image URL'],
+                    'caption': row['Image Caption'],
+                    'position': row['Image left|right|top|bottom'],
+                }
             current_group['mainEvents'].append(event)
+
         elif main_or_comparative == 'Comparative':
+            if building_main:
+                # Switch from building mainEvents to comparativeEvents
+                building_main = False
+
+            event = {
+                'date': row['Event Date'],
+                'text': {
+                    # 'brief': row['Event Brief'],
+                    'text': row['Event Text'],
+                }
+            }
+            if row['Image URL']:
+                event['image'] = {
+                    'url': row['Image URL'],
+                    'caption': row['Image Caption'],
+                    'position': row['Image left|right|top|bottom'],
+                }
+            if current_group is None:
+                # Defensive check: shouldn't happen, but just in case
+                current_group = {
+                    'title': {'headline': ''},
+                    'mainEvents': [],
+                    'comparativeEvents': []
+                }
+                current_era['eventGroups'].append(current_group)
+
             current_group['comparativeEvents'].append(event)
 
-    # Build final object
     timeline_data = {'eras': eras}
 
     with open(output_file, 'w', encoding='utf-8') as f:
@@ -85,7 +112,7 @@ def convert_csv_to_json(input_file, output_file=None):
     print(f"✅ JSON file created: {output_file}")
 
 def set_up_cmd_line_args():
-    parser = argparse.ArgumentParser(description="Convert flat Timeline CSV back into nested JSON.")
+    parser = argparse.ArgumentParser(description="Convert Timeline CSV into nested JSON grouping by event sequences.")
     parser.add_argument('input_file', help='Path to the input CSV file.')
     parser.add_argument('--output_file', '-o', help='Path to the output JSON file.', default=None)
     return parser

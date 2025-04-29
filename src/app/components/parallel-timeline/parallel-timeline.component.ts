@@ -61,6 +61,7 @@ export class ParallelTimelineComponent implements AfterViewInit {
     public isMobileOrTablet: boolean = this.deviceService.isMobile() || this.deviceService.isTablet();
     private verticalScrollCounter: number = 0;
     private verticalScrollBuffer: number = 15;
+    private timelinePath: string = 'timelines/timeline.json';
 
     constructor(
         private http: HttpClient,
@@ -73,7 +74,7 @@ export class ParallelTimelineComponent implements AfterViewInit {
     * It also sets up the scroll event listener for the timeline.
     */
     ngAfterViewInit(): void {
-        this.loadTimelineData();
+        this.loadTimelineData(this.timelinePath);
 
         this.handleProgrammaticScrollEnd();
 
@@ -87,12 +88,12 @@ export class ParallelTimelineComponent implements AfterViewInit {
     /**
      * Load the timeline data from the JSON file.
      */
-    loadTimelineData() {
-        this.http.get('timelines/timeline.json').subscribe({
+    loadTimelineData(timelinePath: string) {
+        this.http.get(timelinePath).subscribe({
             next: (data: any) => {
-                data = this.setIds(data);
-                this.setFlattendEventGroups(data);
-                this.createDrawerCards(data);
+                const parsedData = this.setIds(data);
+                this.setFlattendEventGroups(parsedData);
+                this.createDrawerCards(parsedData);
                 // Set the current era to the first one
                 if (this.flattendEventGroups?.[0]) {
                     this.updateCurrentFlatGroup(0);
