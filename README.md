@@ -95,7 +95,7 @@ Each eventGroup pairs main events with comparative events that should be display
 
 ```json
 {
-    "title": { "headline": "string" },       // (optional) Group title displayed above the events
+    "title": { "headline": "string" }, // (optional) Group title displayed above the events
     "mainEvents": [ /* TimelineEvent */ ],
     "comparativeEvents": [ /* TimelineEvent */ ]
 }
