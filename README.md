@@ -11,7 +11,7 @@ In order to make this app work, you must provide your own `./public/` directory 
 - `images/`
 - `timelines/timeline.json`
 
-The directory `public_example` is provided to show you an example of the content and format. Rename it to `public` to make it use the example assets. See [timeline.json Format Overview](#-timelinejson-format-overview) for more information on the format of the timeline.
+The directory `public_example` is provided to show you an example of the content and format. Rename it to `public` to make it use the example assets. See [timeline.json Format Overview](#timeline.json-format-overview) for more information on the format of the timeline.
 
 To keep it modular, you can create git repo for your `public` directory and clone it into this project as `public`.
 
@@ -68,7 +68,7 @@ After cloning:
 
    - Run `npx cap sync` to sync everything to the `android/` and `ios/` directories.
 
-## 🗂️ timeline.json Format Overview
+## timeline.json Format Overview
 
 The timeline.json file defines the structure for an interactive, scroll-based historical timeline. It organizes content into eras, each containing multiple event groups, which in turn hold main and comparative events.
 
