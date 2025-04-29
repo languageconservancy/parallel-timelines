@@ -1,0 +1,108 @@
+{
+    "eras": [
+        {
+            "title": {
+                "headline": "My Cool Timelines App"
+            },
+            "mainEventsBackground": {
+                "url": "images/bg-main.jpg"
+            }
+        },
+        {
+            "title": {
+                "headline": "The Classical Age"
+            },
+            "mainEventsBackground": {
+                "url": "images/bg-classical-main.jpg"
+            },
+            "comparativeEventsBackground": {
+                "url": "images/bg-classical-comp.jpg",
+                "color": "#cdbcbd"
+            },
+            "eventGroups": [
+                {
+                    "title": { "headline": "Greek and Indian Culture" },
+                    "mainEvents": [
+                        {
+                            "date": "500 BCE",
+                            "text": {
+                                "brief": "Socrates teaches in Athens",
+                                "text": "Socrates lays foundations of Western philosophy."
+                            },
+                            "image": {
+                                "url": "images/socrates.jpg",
+                                "caption": "Socrates teaching in Athens",
+                                "position": "left"
+                            }
+                        },
+                        {
+                            "date": "400 BCE",
+                            "text": {
+                                "brief": "Plato writes The Republic",
+                                "text": "Plato's work on justice and the ideal state."
+                            }
+                        },
+                        {
+                            "date": "300 BCE",
+                            "text": {
+                                "brief": "Aristotle teaches in Athens",
+                                "text": "Aristotle's contributions to logic, metaphysics, and ethics."
+                            }
+                        }
+                    ],
+                    "comparativeEvents": [
+                        {
+                            "date": "500 BCE",
+                            "text": {
+                                "brief": "Buddha teaches in India",
+                                "text": "Siddhartha Gautama (Buddha) spreads teachings in the Gangetic Plain."
+                            }
+                        },
+                        {
+                            "date": "400 BCE",
+                            "text": {
+                                "brief": "Mahavira teaches in India",
+                                "text": "Mahavira, the 24th Tirthankara of Jainism, teaches non-violence and truth."
+                            }
+                        }
+                    ]
+                },
+                {
+                    "title": { "headline": "Greek and Indian Culture" },
+                    "mainEvents": [
+                        {
+                            "date": "200 BCE",
+                            "text": {
+                                "brief": "Aristotle's works influence Western thought",
+                                "text": "Aristotle's writings shape philosophy and science."
+                            }
+                        },
+                        {
+                            "date": "100 BCE",
+                            "text": {
+                                "brief": "Hellenistic culture spreads",
+                                "text": "The fusion of Greek and Eastern cultures."
+                            }
+                        }
+                    ],
+                    "comparativeEvents": [
+                        {
+                            "date": "300 BCE",
+                            "text": {
+                                "brief": "Buddhism spreads in India",
+                                "text": "Buddhism becomes a major religion in India."
+                            }
+                        },
+                        {
+                            "date": "200 BCE",
+                            "text": {
+                                "brief": "Jainism flourishes in India",
+                                "text": "Jainism gains followers and influence in Indian society."
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

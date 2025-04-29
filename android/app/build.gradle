@@ -4,10 +4,10 @@ android {
     namespace "org.tlc.paralleltimelines"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "org.crowlanguage.crowtimeline"
+        applicationId "org.company.paralleltimelines"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 5
+        versionCode 1
         versionName "0.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
