@@ -66,7 +66,7 @@ def convert_csv_to_json(input_file, output_file=None):
             event = {
                 'date': row['Event Date'],
                 'text': {
-                    # 'brief': row['Event Brief'],
+                    'brief': row['Event Brief'],
                     'text': row['Event Text'],
                 }
             }
@@ -86,7 +86,7 @@ def convert_csv_to_json(input_file, output_file=None):
             event = {
                 'date': row['Event Date'],
                 'text': {
-                    # 'brief': row['Event Brief'],
+                    'brief': row['Event Brief'],
                     'text': row['Event Text'],
                 }
             }

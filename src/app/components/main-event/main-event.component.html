@@ -32,9 +32,15 @@
                       }"
                 />
             }
-            <div class="">
+            <div>
                 <h3 class="font-bold text-center text-2xl">{{event.date}}</h3>
-                <div [innerHTML]="event.text.text"></div>
+                <div class="inline" [innerHTML]="textExpanded || !event.text.brief ? event.text.text : event.text.brief"></div>&nbsp;
+                @if (event.text.brief && event.text.brief !== event.text.text) {
+                <a href="#" (click)="textExpanded = !textExpanded; $event.preventDefault()"
+                        class="text-blue-900 hover:text-blue-700 underline font-medium text-sm md:text-base lg:text-lg">
+                        {{textExpanded ? 'less' : 'more'}}
+                    </a>
+                }
             </div>
         </div>
     </div>

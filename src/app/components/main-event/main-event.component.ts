@@ -12,6 +12,7 @@ const ValidImagePositions = ['left', 'right', 'top', 'bottom'];
 })
 export class MainEventComponent {
     @Input() event!: TimelineEvent;
+    public textExpanded: boolean = false;
 
     ngAfterViewInit() {
         if (this.event.image) {
