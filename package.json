@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "buildsync": "npm run build && npx cap sync"
   },
   "engines": {
     "node": ">=22.0.0",

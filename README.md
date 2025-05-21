@@ -27,7 +27,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ### Android & iOS
 
-Run `npm run build && npx cap sync` from the project root directory run the following command to build the web-app and sync it into the **android/** and **ios/** directories:
+Run `npm run build && npx cap sync` from the project root directory to build the web-app and sync it into the **android/** and **ios/** directories. The shortcut `npm run buildsync` is also provided (defined in package.json), which does the same thing.
 
 For **Android**, open the `android/` directory in [Android Studio](https://developer.android.com/studio) and build and run the app from there.
 
