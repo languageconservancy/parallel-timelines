@@ -49,13 +49,21 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 After cloning:
 
-1. Update the app name and ID:
+1. Update the following values to customize for your own app:
 
-   - `capacitor.config.ts`: change `appId` and `appName`
-   - `android/app/src/main/AndroidManifest.xml`
-   - `ios/App/App/Info.plist`
+    - **General**:
+        - `capacitor.config.ts`:
+            - `appId` and `appName`
+    - **Android**:
+        - `android/app/src/main/res/values/strings.xml`:
+            - `string name="app_name"></string>`
+            - `string name="title_activity_main"></string>`
+        - `android/app/build.gradle`:
+            - `applicationId`
+    - **iOS**:
+        - `ios/App/App/Info.plist`: change `Bundle Identifier` to your app's bundle identifier
 
-2. Change native project names:
+2. Change native project names (optional):
 
    - Android: rename Java packages (optional)
    - iOS: rename Xcode target (optional but painful)
