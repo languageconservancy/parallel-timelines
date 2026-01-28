@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Parallel Timelines</string>
-    <string name="title_activity_main">Parallel Timelines</string>
-    <string name="package_name">org.tlc.paralleltimelines</string>
-    <string name="custom_url_scheme">org.tlc.paralleltimelines</string>
+    <string name="app_name">Crow Timeline</string>
+    <string name="title_activity_main">Crow Timeline</string>
 </resources>

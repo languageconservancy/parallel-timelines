@@ -1,4 +1,10 @@
 {
+    "appBackgroundAudios": [
+        {
+            "url": "audio/ambient-background.mp3",
+            "loop": true
+        }
+    ],
     "eras": [
         {
             "title": {
@@ -19,6 +25,12 @@
                 "url": "images/bg-classical-comp.jpg",
                 "color": "#cdbcbd"
             },
+            "backgroundAudios": [
+                {
+                    "url": "audio/classical-era.mp3",
+                    "loop": true
+                }
+            ],
             "eventGroups": [
                 {
                     "title": { "headline": "Greek and Indian Culture" },

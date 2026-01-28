@@ -1,14 +1,16 @@
 export interface TimelineData {
+    appBackgroundAudios?: TimelineBackgroundAudio[];
     eras: TimelineEra[];
 }
 
 export interface TimelineEra {
     id?: number;
     type?: string;
-    title?: { headline?: string },
-    mainEventsBackground?: TimelineBackground,
-    comparativeEventsBackground?: TimelineBackground,
+    title?: { headline?: string };
+    mainEventsBackground?: TimelineBackground;
+    comparativeEventsBackground?: TimelineBackground;
     eventGroups: TimelineEventGroup[];
+    backgroundAudios?: TimelineBackgroundAudio[];
 }
 
 export interface TimelineEventGroup {
@@ -36,7 +38,7 @@ export interface TimelineBackground {
 export interface TimelineEventImage {
     url: string;
     caption?: string;
-    position?: string
+    position?: string;
 }
 
 export interface TimelineFlattenedEventGroup {
@@ -58,3 +60,8 @@ export interface DrawerCard {
     title: string;
     background: TimelineBackground;
 }
+
+export interface TimelineBackgroundAudio {
+    url: string;
+}
+
