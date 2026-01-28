@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build:dev": "ng build --configuration development",
+    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "buildsync": "npm run build && npx cap sync"
+    "buildsync": "npm run build:prod && npx cap sync"
   },
   "engines": {
     "node": ">=22.0.0",

@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'org.tlc.paralleltimelines',
-  appName: 'Parallel Timelines',
+  appId: 'org.crowlanguage.crowtimeline',
+  appName: 'Crow Timeline',
   webDir: 'dist/browser'
 };
 

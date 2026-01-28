@@ -85,6 +85,12 @@ This file supports educational or narrative timelines that compare parallel hist
 ### 🖹 JSON Structure
 ```json
 {
+    "appBackgroundAudios": [
+        {
+            "url": "audio/audio.mp3"
+        },
+        ...
+    ]
     "eras": [
         {
             "title": { "headline": "string" }, // Title displayed at the top of the screen
@@ -186,3 +192,8 @@ Each eventGroup pairs main events with comparative events that should be display
     ]
 }
 ```
+
+## Background Audio
+
+The user can toggle on/off background audio. If audio for the era currently being viewed is available, that audio will be played. If no era audio is specified by the JSON file, then playback with fall back to app background audio, if available.
+The audio will loop.
