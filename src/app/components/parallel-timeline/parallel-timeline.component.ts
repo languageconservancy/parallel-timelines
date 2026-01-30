@@ -15,6 +15,7 @@ import {
     DrawerCard,
     TimelineEra,
     TimelineFlattenedEventGroup,
+    TimelineBackgroundAudio,
 } from 'app/models/timeline.model';
 import { TimelineEventGroupComponent } from 'app/components/timeline-event-group/timeline-event-group.component';
 import { BackgroundComponent } from '../background/background.component';
@@ -126,6 +127,13 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
     loadTimelineData(timelinePath: string) {
         this.http.get(timelinePath).subscribe({
             next: async (data: any) => {
+                // Separate out app background audio from the timeline data
+                const appBackgroundAudios = this.separateAppBackgroundAudio(data);
+                if (appBackgroundAudios.length > 0) {
+                  // Remove app background audio era from the timeline data, since it's not a real era
+                  data.eras.splice(0, 1);
+                }
+
                 const parsedData = this.setIds(data);
                 this.timelineData = parsedData;
                 this.setFlattendEventGroups(parsedData);
@@ -133,7 +141,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
 
                 // Initialize app background audio
                 await this.audioService.initializeAppBackgroundAudio(
-                    parsedData.appBackgroundAudios || null
+                    appBackgroundAudios
                 );
 
                 // Set the current era to the first one
@@ -145,6 +153,16 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
                 console.error('Error loading tale data:', error);
             },
         });
+    }
+
+    /**
+     * Separate out app background audio from the timeline data.
+     * @param {TimelineData} data - The timeline data
+     * @returns {TimelineBackgroundAudio[]} - The app background audio
+     */
+    separateAppBackgroundAudio(data: TimelineData): TimelineBackgroundAudio[] {
+        const appBackgroundAudio = data.eras.find(era => era.title?.headline === 'appBackgroundAudio')?.backgroundAudios;
+        return appBackgroundAudio || [];
     }
 
     /**

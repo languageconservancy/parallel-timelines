@@ -11,6 +11,14 @@
             [style.opacity]="'1'"
             [style.backgroundImage]="'url(' + (mainEventsBackground?.url) + ')'"
         ></div>
+        <!-- Main background credit -->
+        @if (mainEventsBackground?.credit) {
+            <div class="absolute bottom-8 md:bottom-12 right-4 md:right-10 w-auto text-center text-sm text-gray-500">
+                <p class="text-sm text-gray-500">
+                    Image by {{mainEventsBackground?.credit}}
+                </p>
+            </div>
+        }
     </div>
 
     @if (eraType !== 'titlePage') {

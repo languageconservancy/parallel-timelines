@@ -33,6 +33,7 @@ export interface TimelineEvent {
 export interface TimelineBackground {
     url?: string;
     color?: string;
+    credit?: string;
 }
 
 export interface TimelineEventImage {

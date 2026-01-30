@@ -5,7 +5,7 @@
     </div>
 } @else {
     <!-- Underlay below button so tapping any near bottom will open drawer -->
-    <div class="fixed h-[5rem] bottom-0 w-full z-40 bg-transparent" (click)="openDrawer()"
+    <div class="fixed h-[5rem] bottom-0 w-full z-40 bg-transparent cursor-pointer" (click)="openDrawer()"
         style="padding-bottom: env(safe-area-inset-bottom);"
     ></div>
 }

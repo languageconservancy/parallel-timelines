@@ -11,9 +11,8 @@
     <!-- Era Title -->
     <div
         #eraTitleRef
-        class="absolute left-4 md:left-6 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-2xl pointer-events-none"
+        class="absolute left-4 md:left-6 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-2xl pointer-events-none top-[max(4rem,env(safe-area-inset-top))] md:top-[max(1.5rem,env(safe-area-inset-top))]"
         [innerHTML]="currentEra().title?.headline"
-        style="top: max(1.5rem, env(safe-area-inset-top))"
     ></div>
     }
 
@@ -59,7 +58,7 @@
     (scroll)="onTimelineScroll($event)"
 >
     @for (group of flattendEventGroups; track group.id) {
-    <div class="w-screen h-screen flex flex-col snap-center flex-shrink-0">
+    <div class="w-screen h-screen flex flex-col snap-center flex-shrink-0 mt-6 md:mt-0">
         <app-timeline-event-group
             [group]="group"
             [eraTitle]="currentEra().title?.headline"

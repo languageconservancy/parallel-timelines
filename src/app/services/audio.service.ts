@@ -57,7 +57,6 @@ export class AudioService {
     public async initializeAppBackgroundAudio(
           backgroundAudios: TimelineBackgroundAudio[] | null
     ): Promise<void> {
-        console.debug('Initializing background audio:', backgroundAudios);
         if (backgroundAudios && backgroundAudios.length > 0) {
             this.availableAppBackgroundAudios = backgroundAudios;
             this.currentBackgroundAudios = backgroundAudios;
@@ -209,10 +208,8 @@ export class AudioService {
     public async handleEraChange(
         eraAudios: TimelineBackgroundAudio[],
     ): Promise<void> {
-        console.debug('Handling era change audio:', eraAudios);
         if (JSON.stringify(this.currentBackgroundAudios) === JSON.stringify(eraAudios)) {
             // era audio is already active, so do nothing
-            console.debug('Era audio is already active, so do nothing');
             return;
         }
         if (eraAudios && eraAudios.length > 0) {
@@ -228,7 +225,6 @@ export class AudioService {
             return;
         }
 
-        console.debug('Switching to era audio:', eraAudios);
         // Set or replace current background audios
         this.currentBackgroundAudios = eraAudios;
         // Use first era audio if available
@@ -240,13 +236,9 @@ export class AudioService {
     }
 
     handleChangeToEraWithoutAudio(): void {
-        console.debug('Switching to era without audio, using app audio');
         // if no audio for this new era, use app audio
-        console.debug('Current background audios:', this.currentBackgroundAudios);
-        console.debug('Available app background audios:', this.availableAppBackgroundAudios);
         if (JSON.stringify(this.currentBackgroundAudios) === JSON.stringify(this.availableAppBackgroundAudios)) {
             // app background audio is still active, so do nothing
-            console.debug('current and app background audios are the same, so do nothing');
             return;
         } else {
             // switch to app background audios if available
@@ -255,7 +247,6 @@ export class AudioService {
                 return;
             }
 
-            console.debug('Switching to app background audios');
             this.currentBackgroundAudios = this.availableAppBackgroundAudios;
             this.currentBackgroundAudioIndex = 0;
             if (this.audioStateSubject.value.isPlaying) {
