@@ -19,6 +19,7 @@ def convert_json_to_csv(input_file):
         'Order',
         'Era Title',
         'Main Background',
+        'Main Background Credit',
         'Comparative Background',
         'Comparative Background Color',
         'Group Title',
@@ -29,6 +30,7 @@ def convert_json_to_csv(input_file):
         'Image URL',
         'Image Caption',
         'Image left|right|top|bottom',
+        'Background Audios',
     ]
 
     with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
@@ -38,15 +40,22 @@ def convert_json_to_csv(input_file):
 
         for era in data.get('eras', []):
             era_title = era.get('title', {}).get('headline', '')
-            main_background = era.get('mainEventsBackground', {}).get('url', '')
+            main_background_url = era.get('mainEventsBackground', {}).get('url', '')
+            main_background_credit = era.get('mainEventsBackground', {}).get('credit', '')
             comparative_background = era.get('comparativeEventsBackground', {}).get('url', '')
             comparative_background_color = era.get('comparativeEventsBackground', {}).get('color', '')
+            background_audios = '; '.join([audio.get('url', '') for audio in era.get('backgroundAudios', [])])
 
             if not era.get('eventGroups', []):
+                if era_title == 'appBackgroundAudio':
+                  order = 0;
+
                 writer.writerow({
                     'Order': order,
                     'Era Title': era_title,
-                    'Main Background': main_background,
+                    'Main Background': main_background_url,
+                    'Main Background Credit': main_background_credit,
+                    'Background Audios': background_audios,
                 })
                 order += 1
                 continue
@@ -59,7 +68,8 @@ def convert_json_to_csv(input_file):
                     writer.writerow({
                         'Order': order,
                         'Era Title': era_title,
-                        'Main Background': main_background,
+                        'Main Background': main_background_url,
+                        'Main Background Credit': main_background_credit,
                         'Comparative Background': comparative_background,
                         'Comparative Background Color': comparative_background_color,
                         'Group Title': group_title,
@@ -78,7 +88,8 @@ def convert_json_to_csv(input_file):
                     writer.writerow({
                         'Order': order,
                         'Era Title': era_title,
-                        'Main Background': main_background,
+                        'Main Background': main_background_url,
+                        'Main Background Credit': main_background_credit,
                         'Comparative Background': comparative_background,
                         'Comparative Background Color': comparative_background_color,
                         'Group Title': group_title,

@@ -21,14 +21,13 @@
             }"
         >
 
-        <!-- Timeline bar: row 1 -->
         @for (event of events; track event.id) {
             <div class="flex flex-col items-center h-full select-none pb-safe">
                 <!-- Vertical line below date -->
                 <div>{{"|"}}</div>
 
                 <!-- Event info -->
-                <div class="w-full pb-4 flex flex-col items-center">
+                <div class="w-full pb-8 md:pb-4 flex flex-col items-center">
                     <app-comparative-event [event]="event"></app-comparative-event>
                 </div>
             </div>
