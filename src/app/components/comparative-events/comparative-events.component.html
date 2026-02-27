@@ -1,7 +1,8 @@
 <div class="w-full h-full flex flex-col">
-
     <!-- Timeline bar: row 1 -->
-    <div class="bg-gray-800 text-white text-sm font-mono flex justify-evenly h-10 select-none">
+    <div
+        class="bg-gray-800 text-white text-sm font-mono flex justify-evenly h-10 select-none"
+    >
         <!-- Center text -->
         @for (event of events; track event.id) {
             <div class="flex items-center justify-center w-full text-center">
@@ -10,27 +11,34 @@
         }
     </div>
 
-    <div class="vertical-scroll-area h-full overflow-y-auto hide-scrollbars touch-pan-y"
+    <div
+        class="vertical-scroll-area h-full overflow-y-auto hide-scrollbars touch-pan-y"
         [ngStyle]="{
             'background-color': background?.color ?? 'transparent',
         }"
     >
-        <div class="grid h-full"
+        <div
+            class="grid h-full"
             [ngStyle]="{
-                'grid-template-columns': 'repeat(' + events.length + ', minmax(0, 1fr))'
+                'grid-template-columns':
+                    'repeat(' + events.length + ', minmax(0, 1fr))',
             }"
         >
+            @for (event of events; track event.id) {
+                <div
+                    class="flex flex-col items-center h-full select-none pb-safe"
+                >
+                    <!-- Vertical line below date -->
+                    <div>{{ "|" }}</div>
 
-        @for (event of events; track event.id) {
-            <div class="flex flex-col items-center h-full select-none pb-safe">
-                <!-- Vertical line below date -->
-                <div>{{"|"}}</div>
-
-                <!-- Event info -->
-                <div class="w-full pb-8 md:pb-4 flex flex-col items-center">
-                    <app-comparative-event [event]="event"></app-comparative-event>
+                    <!-- Event info -->
+                    <div class="w-full pb-8 md:pb-4 flex flex-col items-center">
+                        <app-comparative-event
+                            [event]="event"
+                        ></app-comparative-event>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>
