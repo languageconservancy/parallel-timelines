@@ -1,13 +1,20 @@
 @if (event) {
-    <div class="my-2 bg-white/90 text-blue-900 text-sm md:text-base lg:text-lg font-semibold p-4 max-w-prose w-full shadow-md rounded-lg select-none">
+    <div
+        class="my-2 bg-white/90 text-blue-900 text-sm md:text-base lg:text-lg font-semibold p-4 max-w-prose w-full shadow-md rounded-lg select-none"
+    >
         <!-- Image on left, text on the right -->
-        <div class="flex"
+        <div
+            class="flex"
             [ngClass]="{
                 'flex-row': event.image && event.image.position === 'left',
-                'flex-row-reverse': event.image && event.image.position === 'right',
-                'flex-col justify-center items-center text-center': event.image && event.image.position === 'top',
-                'flex-col-reverse justify-center items-center text-center': event.image && event.image.position === 'bottom'
-            }">
+                'flex-row-reverse':
+                    event.image && event.image.position === 'right',
+                'flex-col justify-center items-center text-center':
+                    event.image && event.image.position === 'top',
+                'flex-col-reverse justify-center items-center text-center':
+                    event.image && event.image.position === 'bottom',
+            }"
+        >
             @if (event.image) {
                 <img
                     [src]="event.image.url"
@@ -15,30 +22,60 @@
                     class="rounded-lg shadow-md object-contain"
                     [ngClass]="{
                         'mr-2': event.image.position === 'left',
-                        'w-32': event.image.position === 'left' || event.image.position === 'right',
-                        'md:w-48': event.image.position === 'left' || event.image.position === 'right',
-                        'max-h-48': event.image.position === 'left' || event.image.position === 'right',
-                        'my-auto': event.image.position === 'left' || event.image.position === 'right',
+                        'w-32':
+                            event.image.position === 'left' ||
+                            event.image.position === 'right',
+                        'md:w-48':
+                            event.image.position === 'left' ||
+                            event.image.position === 'right',
+                        'max-h-48':
+                            event.image.position === 'left' ||
+                            event.image.position === 'right',
+                        'my-auto':
+                            event.image.position === 'left' ||
+                            event.image.position === 'right',
 
                         'ml-2': event.image.position === 'right',
 
                         'mb-2': event.image.position === 'top',
-                        'max-w-48': event.image.position === 'top' || event.image.position === 'bottom',
-                        'max-h-32': event.image.position === 'top' || event.image.position === 'bottom',
-                        'md:max-h-48': event.image.position === 'top' || event.image.position === 'bottom',
-                        'mx-auto': event.image.position === 'top' || event.image.position === 'bottom',
+                        'max-w-48':
+                            event.image.position === 'top' ||
+                            event.image.position === 'bottom',
+                        'max-h-32':
+                            event.image.position === 'top' ||
+                            event.image.position === 'bottom',
+                        'md:max-h-48':
+                            event.image.position === 'top' ||
+                            event.image.position === 'bottom',
+                        'mx-auto':
+                            event.image.position === 'top' ||
+                            event.image.position === 'bottom',
 
                         'mt-2': event.image.position === 'bottom',
-                      }"
+                    }"
                 />
             }
             <div>
-                <h3 class="font-bold text-center text-2xl">{{event.date}}</h3>
-                <div class="inline" [innerHTML]="textExpanded || !event.text.brief ? event.text.text : event.text.brief"></div>&nbsp;
+                <h3 class="font-bold text-center text-2xl">{{ event.date }}</h3>
+                <div
+                    class="inline"
+                    [innerHTML]="
+                        textExpanded || !event.text.brief
+                            ? event.text.text
+                            : event.text.brief
+                    "
+                ></div>
+                &nbsp;
                 @if (event.text.brief && event.text.brief !== event.text.text) {
-                <a href="#" (click)="textExpanded = !textExpanded; $event.preventDefault()"
-                        class="text-blue-900 hover:text-blue-700 underline font-medium text-sm md:text-base lg:text-lg">
-                        {{textExpanded ? 'less' : 'more'}}
+                    <a
+                        href="#"
+                        (click)="
+                            textExpanded = !textExpanded;
+                            $event.preventDefault()
+                        "
+                        class="text-blue-900 hover:text-blue-700 underline font-medium text-sm md:text-base lg:text-lg"
+                    >
+                        {{ textExpanded ? "less" : "more" }}
                     </a>
                 }
             </div>

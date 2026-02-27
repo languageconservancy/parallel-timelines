@@ -1,0 +1,21 @@
+:host ::ng-deep span.event-links {
+    color: inherit;
+}
+
+:host ::ng-deep span.event-links a {
+    color: #1d4ed8;
+    text-decoration: underline;
+
+    &::after {
+        content: "↗";
+        font-size: 0.7em;
+        vertical-align: super;
+        margin-left: 1px;
+        text-decoration: none;
+        display: inline-block;
+    }
+}
+
+:host ::ng-deep span.event-links a:hover {
+    color: #1e3a8a;
+}
