@@ -120,10 +120,7 @@ export class BottomDrawerComponent implements OnChanges, AfterViewInit {
         });
     }
 
-    public drawerTabClicked() {
-        // This method is called when the user clicks on a nav tab
-        // It sets the current era index to the index of the clicked tab
-        // and scrolls to that tab
+    public toggleDrawerVisibility() {
         this.isOpen = !this.isOpen;
     }
 
@@ -143,7 +140,6 @@ export class BottomDrawerComponent implements OnChanges, AfterViewInit {
         // This method is called when the user clicks on an era
         // It sets the current era index to the index of the clicked era
         this.eraClicked.emit(eventGroupIndex);
-        this.isOpen = false;
     }
 
     public getModifiedEraTitle(eraTitle: string): string {
