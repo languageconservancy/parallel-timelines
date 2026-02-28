@@ -1,6 +1,17 @@
 import {
-    Component, Input, Output, EventEmitter, ViewChild, ElementRef, SimpleChanges,
-    HostListener, AfterViewInit, NgZone, QueryList, ViewChildren, OnChanges,
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ElementRef,
+    SimpleChanges,
+    HostListener,
+    AfterViewInit,
+    NgZone,
+    QueryList,
+    ViewChildren,
+    OnChanges,
     ChangeDetectorRef,
 } from '@angular/core';
 import { take } from 'rxjs/operators';
@@ -11,7 +22,7 @@ import { DrawerCard } from 'app/models/timeline.model';
     selector: 'app-bottom-drawer',
     imports: [CommonModule],
     templateUrl: './bottom-drawer.component.html',
-    styleUrl: './bottom-drawer.component.scss'
+    styleUrl: './bottom-drawer.component.scss',
 })
 export class BottomDrawerComponent implements OnChanges, AfterViewInit {
     // This component is used to display the bottom drawer of the timeline
@@ -25,10 +36,10 @@ export class BottomDrawerComponent implements OnChanges, AfterViewInit {
     @Output() eraClicked = new EventEmitter<number>();
     @ViewChild('drawerScrollRef') drawerScrollRef!: ElementRef<HTMLDivElement>;
     @ViewChildren('eraButtonRef') eraButtonRef!: QueryList<ElementRef<HTMLDivElement>>;
-    public isOpen: boolean = false;
-    public leftPadding: string = '0px';//`${window.innerWidth}px`;
-    public rightPadding: string = '0px';//`${window.innerWidth}px`;
-    public drawerWidth: string = '100vh';//`${window.innerWidth}px`;
+    public isOpen: boolean = true;
+    public leftPadding: string = '0px'; //`${window.innerWidth}px`;
+    public rightPadding: string = '0px'; //`${window.innerWidth}px`;
+    public drawerWidth: string = '100vh'; //`${window.innerWidth}px`;
     @HostListener('window:resize')
     onResize() {
         this.calculateSidePadding();
@@ -58,14 +69,18 @@ export class BottomDrawerComponent implements OnChanges, AfterViewInit {
             console.warn('No drawer scroll ref found');
             return;
         }
-        drawerScrollEl.addEventListener('wheel', (event: WheelEvent) => {
-            if (event.deltaY === 0) {
-                return;
-            }
+        drawerScrollEl.addEventListener(
+            'wheel',
+            (event: WheelEvent) => {
+                if (event.deltaY === 0) {
+                    return;
+                }
 
-            event.preventDefault();
-            drawerScrollEl.scrollLeft += event.deltaY;
-        }, { passive: false });
+                event.preventDefault();
+                drawerScrollEl.scrollLeft += event.deltaY;
+            },
+            { passive: false },
+        );
     }
 
     private enableDragScroll() {
@@ -134,7 +149,7 @@ export class BottomDrawerComponent implements OnChanges, AfterViewInit {
     public getModifiedEraTitle(eraTitle: string): string {
         // This method is called to get the modified era title
         // It removes the "Timeline" prefix from the title
-        return eraTitle.substring(0, 16) + (eraTitle.length > 16 ? '...' : '')
+        return eraTitle.substring(0, 16) + (eraTitle.length > 16 ? '...' : '');
     }
 
     public scrollToEraButton(eraIndex?: number) {
@@ -196,9 +211,9 @@ export class BottomDrawerComponent implements OnChanges, AfterViewInit {
         const button = innerRow.children[0] as HTMLElement;
         const buttonWidth = button.getBoundingClientRect().width;
         const totalButtonsWidth = buttonWidth * innerRow.children.length;
-        const leftPadding = (screenWidth / 2) - (buttonWidth / 2);
-        const rightPadding = (screenWidth / 2) - (buttonWidth / 2);
-        const drawerWidth = totalButtonsWidth + (leftPadding * 2);
+        const leftPadding = screenWidth / 2 - buttonWidth / 2;
+        const rightPadding = screenWidth / 2 - buttonWidth / 2;
+        const drawerWidth = totalButtonsWidth + leftPadding * 2;
 
         this.drawerWidth = `${drawerWidth}px`;
         this.leftPadding = `${leftPadding}px`;

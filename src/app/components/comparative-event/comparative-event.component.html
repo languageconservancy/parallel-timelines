@@ -1,3 +1,4 @@
-<div class="max-w-xs text-sm md:text-base lg:text-lg font-medium text-gray-800 px-2 text-center select-none pb-safe-offset-4">
-    {{ event.text.text }}
-</div>
+<div
+    class="max-w-xs text-sm md:text-base lg:text-lg font-medium text-gray-800 px-2 text-center select-none pb-safe-offset-4"
+    [innerHTML]="event.text.text"
+></div>

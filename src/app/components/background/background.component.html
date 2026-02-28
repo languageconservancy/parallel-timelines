@@ -1,32 +1,37 @@
 <div class="absolute inset-0 -z-20 pointer-events-none overflow-hidden">
     <!-- Previous backgrounds -->
-    <div class="absolute top-0 left-0 w-full"
+    <div
+        class="absolute top-0 left-0 w-full"
         [ngClass]="{
             'h-full': eraType === 'titlePage',
             'h-3/4': eraType !== 'titlePage',
-        }">
+        }"
+    >
         <!-- Previous -->
         <div
             class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
             [style.opacity]="'1'"
-            [style.backgroundImage]="'url(' + (mainEventsBackground?.url) + ')'"
+            [style.backgroundImage]="'url(' + mainEventsBackground?.url + ')'"
         ></div>
         <!-- Main background credit -->
         @if (mainEventsBackground?.credit) {
-            <div class="absolute bottom-8 md:bottom-12 right-4 md:right-10 w-auto text-center text-sm text-gray-500">
-                <p class="text-sm text-gray-500">
-                    Image by {{mainEventsBackground?.credit}}
-                </p>
-            </div>
+            <p
+                class="absolute bottom-12 md:bottom-16 right-4 md:right-10 text-xs text-gray-700 bg-white/60 backdrop-blur-sm px-2 mx-4 py-1 rounded"
+            >
+                Image by
+                <span [innerHTML]="mainEventsBackground?.credit"></span>
+            </p>
         }
     </div>
 
-    @if (eraType !== 'titlePage') {
+    @if (eraType !== "titlePage") {
         <div class="absolute bottom-0 left-0 w-full h-1/3">
             <div
                 class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
                 [style.opacity]="'1'"
-                [style.backgroundImage]="'url(' + comparativeEventsBackground + ')'"
+                [style.backgroundImage]="
+                    'url(' + comparativeEventsBackground + ')'
+                "
             ></div>
         </div>
     }
