@@ -75,12 +75,12 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
     @ViewChild('eraTitleRef') eraTitleRef!: ElementRef<HTMLDivElement>;
     @ViewChild('timelineScrollRef')
     timelineScrollRef!: ElementRef<HTMLDivElement>;
+    @ViewChild(BottomDrawerComponent) bottomDrawerRef!: BottomDrawerComponent;
     private scrollTimeout?: number = 0;
     private lastScrollLeft: number = 0;
     private touchStartX: number = 0;
     private touchEndX: number = 0;
-    public isMobileOrTablet: boolean =
-        this.deviceService.isMobile() || this.deviceService.isTablet();
+    public isMobileOrTablet: boolean = this.deviceService.isMobile() || this.deviceService.isTablet();
     private verticalScrollCounter: number = 0;
     private verticalScrollBuffer: number = 15;
     private timelinePath: string = 'timelines/timeline.json';
@@ -90,7 +90,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
     constructor(
         private http: HttpClient,
         private deviceService: DeviceDetectorService,
-        private audioService: AudioService
+        private audioService: AudioService,
     ) {}
 
     /**
@@ -130,8 +130,8 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
                 // Separate out app background audio from the timeline data
                 const appBackgroundAudios = this.separateAppBackgroundAudio(data);
                 if (appBackgroundAudios.length > 0) {
-                  // Remove app background audio era from the timeline data, since it's not a real era
-                  data.eras.splice(0, 1);
+                    // Remove app background audio era from the timeline data, since it's not a real era
+                    data.eras.splice(0, 1);
                 }
 
                 const parsedData = this.setIds(data);
@@ -140,9 +140,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
                 this.createDrawerCards(parsedData);
 
                 // Initialize app background audio
-                await this.audioService.initializeAppBackgroundAudio(
-                    appBackgroundAudios
-                );
+                await this.audioService.initializeAppBackgroundAudio(appBackgroundAudios);
 
                 // Set the current era to the first one
                 if (this.flattendEventGroups?.[0]) {
@@ -161,7 +159,9 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
      * @returns {TimelineBackgroundAudio[]} - The app background audio
      */
     separateAppBackgroundAudio(data: TimelineData): TimelineBackgroundAudio[] {
-        const appBackgroundAudio = data.eras.find(era => era.title?.headline === 'appBackgroundAudio')?.backgroundAudios;
+        const appBackgroundAudio = data.eras.find(
+            (era) => era.title?.headline === 'appBackgroundAudio',
+        )?.backgroundAudios;
         return appBackgroundAudio || [];
     }
 
@@ -172,75 +172,56 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
      * scrolling the timeline programmatically.
      */
     handleProgrammaticScrollEnd() {
-        this.timelineScrollRef.nativeElement.addEventListener(
-            'scroll',
-            (event) => {
-                clearTimeout(this.scrollTimeout);
-                this.scrollTimeout = window.setTimeout(() => {
-                    this.isProgrammaticScroll = false;
-                }, 100); // Adjust this timeout for sensitivity (100-300ms is usually good)
-            }
-        );
+        this.timelineScrollRef.nativeElement.addEventListener('scroll', (event) => {
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = window.setTimeout(() => {
+                this.isProgrammaticScroll = false;
+            }, 100); // Adjust this timeout for sensitivity (100-300ms is usually good)
+        });
     }
 
     /**
      * Use the mouse wheel to scroll the timeline.
      */
     useMouseWheelForTimelineScrolling() {
-        this.timelineScrollRef.nativeElement.addEventListener(
-            'wheel',
-            async (event: WheelEvent) => {
-                if (this.isProgrammaticScroll) {
-                    return;
-                }
-                const target = event.target as HTMLElement;
-                const verticalScrollArea = target.closest(
-                    '.vertical-scroll-area'
-                ) as HTMLElement | null;
-
-                if (verticalScrollArea && this.isVerticallyScrollable(target)) {
-                    if (
-                        !this.isVerticallyScrollableAreaFullyScrolled(
-                            verticalScrollArea,
-                            event.deltaY
-                        )
-                    ) {
-                        return;
-                    } else {
-                        // Allow mild overscrolling to prevent unintended horitonzal scrolling
-                        this.verticalScrollCounter++;
-                        if (
-                            this.verticalScrollCounter <
-                            this.verticalScrollBuffer
-                        ) {
-                            return;
-                        }
-                        this.verticalScrollCounter = 0;
-                    }
-                }
-
-                // Make sure scroll is valid
-                if (event.deltaY === 0) {
-                    return;
-                }
-
-                event.preventDefault();
-                const delta = Math.sign(event.deltaY);
-                const newGroupIndex = Math.max(
-                    Math.min(
-                        this.currentFlatGroupIndex() + delta,
-                        this.flattendEventGroups.length - 1
-                    ),
-                    0
-                );
-                await this.updateCurrentFlatGroup(newGroupIndex);
-                this.scrollToGroup(newGroupIndex);
-                // Force scroll of one page at a time
-                this.scrollTimeout = window.setTimeout(() => {
-                    this.isProgrammaticScroll = false;
-                }, 100); // Adjust this timeout for sensitivity (100-300ms is usually good)
+        this.timelineScrollRef.nativeElement.addEventListener('wheel', async (event: WheelEvent) => {
+            if (this.isProgrammaticScroll) {
+                return;
             }
-        );
+            const target = event.target as HTMLElement;
+            const verticalScrollArea = target.closest('.vertical-scroll-area') as HTMLElement | null;
+
+            if (verticalScrollArea && this.isVerticallyScrollable(target)) {
+                if (!this.isVerticallyScrollableAreaFullyScrolled(verticalScrollArea, event.deltaY)) {
+                    return;
+                } else {
+                    // Allow mild overscrolling to prevent unintended horitonzal scrolling
+                    this.verticalScrollCounter++;
+                    if (this.verticalScrollCounter < this.verticalScrollBuffer) {
+                        return;
+                    }
+                    this.verticalScrollCounter = 0;
+                }
+            }
+
+            // Make sure scroll is valid
+            if (event.deltaY === 0) {
+                return;
+            }
+
+            event.preventDefault();
+            const delta = Math.sign(event.deltaY);
+            const newGroupIndex = Math.max(
+                Math.min(this.currentFlatGroupIndex() + delta, this.flattendEventGroups.length - 1),
+                0,
+            );
+            await this.updateCurrentFlatGroup(newGroupIndex);
+            this.scrollToGroup(newGroupIndex);
+            // Force scroll of one page at a time
+            this.scrollTimeout = window.setTimeout(() => {
+                this.isProgrammaticScroll = false;
+            }, 100); // Adjust this timeout for sensitivity (100-300ms is usually good)
+        });
     }
 
     /**
@@ -251,10 +232,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
     isVerticallyScrollable(el: HTMLElement): boolean {
         while (el && el !== document.body) {
             const style = window.getComputedStyle(el);
-            if (
-                (style.overflowY === 'auto' || style.overflowY === 'scroll') &&
-                el.scrollHeight > el.clientHeight
-            ) {
+            if ((style.overflowY === 'auto' || style.overflowY === 'scroll') && el.scrollHeight > el.clientHeight) {
                 return true;
             }
             el = el.parentElement!;
@@ -268,17 +246,12 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
      * @param {number} deltaY - The vertical scroll delta
      * @returns {boolean} - True if the element is fully scrolled, false otherwise
      */
-    isVerticallyScrollableAreaFullyScrolled(
-        el: HTMLElement,
-        deltaY: number
-    ): boolean {
+    isVerticallyScrollableAreaFullyScrolled(el: HTMLElement, deltaY: number): boolean {
         const atTop = el.scrollTop === 0;
-        const atBottom =
-            Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight;
+        const atBottom = Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight;
         const scrollingDown = deltaY > 0;
         const scrollingUp = deltaY < 0;
-        const cannotScrollVertically =
-            (scrollingDown && atBottom) || (scrollingUp && atTop);
+        const cannotScrollVertically = (scrollingDown && atBottom) || (scrollingUp && atTop);
         return cannotScrollVertically;
     }
 
@@ -293,7 +266,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
             (e: TouchEvent) => {
                 this.touchStartX = e.changedTouches[0].screenX;
             },
-            { passive: false }
+            { passive: false },
         );
 
         this.timelineScrollRef.nativeElement.addEventListener(
@@ -308,7 +281,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
 
                 e.preventDefault(); // prevent scrolling
             },
-            { passive: false }
+            { passive: false },
         );
 
         this.timelineScrollRef.nativeElement.addEventListener(
@@ -317,7 +290,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
                 this.touchEndX = e.changedTouches[0].screenX;
                 this.handleSwipeGesture();
             },
-            { passive: false }
+            { passive: false },
         );
     }
 
@@ -356,10 +329,8 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
                         eraId: era.id,
                         eraTitle: era.title,
                         type: 'titlePage',
-                        mainEventsBackground:
-                            era.mainEventsBackground ?? undefined,
-                        comparativeEventsBackground:
-                            era.comparativeEventsBackground ?? undefined,
+                        mainEventsBackground: era.mainEventsBackground ?? undefined,
+                        comparativeEventsBackground: era.comparativeEventsBackground ?? undefined,
                         mainEvents: [],
                         comparativeEvents: [],
                     },
@@ -372,8 +343,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
                 type: 'eventGroups',
                 eraTitle: era.title,
                 mainEventsBackground: era.mainEventsBackground ?? undefined,
-                comparativeEventsBackground:
-                    era.comparativeEventsBackground ?? undefined,
+                comparativeEventsBackground: era.comparativeEventsBackground ?? undefined,
             }));
         });
     }
@@ -416,9 +386,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
         this.drawerCards = timeline.eras.map((era) => ({
             id: era.id ?? 0,
             title: era.title?.headline ?? '',
-            eventGroupIndex: this.flattendEventGroups.findIndex(
-                (group) => group.eraId === era.id
-            ),
+            eventGroupIndex: this.flattendEventGroups.findIndex((group) => group.eraId === era.id),
             background: era.mainEventsBackground || { url: '', color: '' },
         }));
     }
@@ -455,13 +423,10 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
 
         const maxJump = 1;
         if (Math.abs(currentGroupIndex - lastGroupIndex) > maxJump) {
-            currentGroupIndex =
-                lastGroupIndex +
-                Math.sign(currentGroupIndex - lastGroupIndex) * maxJump;
+            currentGroupIndex = lastGroupIndex + Math.sign(currentGroupIndex - lastGroupIndex) * maxJump;
         }
 
-        const currentGroup: TimelineFlattenedEventGroup =
-            this.flattendEventGroups?.[currentGroupIndex];
+        const currentGroup: TimelineFlattenedEventGroup = this.flattendEventGroups?.[currentGroupIndex];
 
         if (currentGroup && currentGroupIndex !== lastGroupIndex) {
             this.updateCurrentFlatGroup(currentGroupIndex).catch(console.error);
@@ -481,9 +446,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
         }
 
         // Get the current era data for audio handling
-        const currentEraData = this.timelineData?.eras.find(
-            (era) => era.id === eventGroup.eraId
-        );
+        const currentEraData = this.timelineData?.eras.find((era) => era.id === eventGroup.eraId);
 
         // Handle audio change when era changes
         if (currentEraData) {
@@ -517,10 +480,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
         const newGroupIndex =
             direction === 'left'
                 ? Math.max(this.currentFlatGroupIndex() - 1, 0)
-                : Math.min(
-                      this.currentFlatGroupIndex() + 1,
-                      this.flattendEventGroups.length - 1
-                  );
+                : Math.min(this.currentFlatGroupIndex() + 1, this.flattendEventGroups.length - 1);
         await this.updateCurrentFlatGroup(newGroupIndex);
         this.scrollToGroup(newGroupIndex);
     }
@@ -550,5 +510,13 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
 
         await this.updateCurrentFlatGroup(index);
         this.scrollToGroup(index);
+    }
+
+    /**
+     * Handle the click event for the era title
+     */
+    onEraTitleClick() {
+        console.log('onEraTitleClick');
+        this.bottomDrawerRef.toggleDrawerVisibility();
     }
 }
