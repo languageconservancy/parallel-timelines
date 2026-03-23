@@ -9,9 +9,12 @@
     >
         <!-- Previous -->
         <div
-            class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+            class="absolute inset-0 bg-cover transition-opacity duration-700"
             [style.opacity]="'1'"
             [style.backgroundImage]="'url(' + mainEventsBackground?.url + ')'"
+            [style.backgroundPosition]="
+                mainEventsBackground?.position ?? 'center'
+            "
         ></div>
         <!-- Main background credit -->
         @if (mainEventsBackground?.credit) {

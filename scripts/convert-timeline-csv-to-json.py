@@ -41,7 +41,7 @@ def convert_csv_to_json(input_file, output_file=None):
                 background_audios = row['Background Audios'].split(';')
                 current_era['backgroundAudios'] = [{'url': audio.strip()} for audio in background_audios]
             if row['Main Background']:
-                current_era['mainEventsBackground'] = {'url': row['Main Background'], 'credit': row['Main Background Credit']}
+                current_era['mainEventsBackground'] = {'url': row['Main Background'], 'credit': row['Main Background Credit'], 'position': row['Main Background Position']}
             if row['Comparative Background'] or row['Comparative Background Color']:
                 current_era['comparativeEventsBackground'] = {
                     'url': row['Comparative Background'],

@@ -65,8 +65,8 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
     public currentEra: WritableSignal<TimelineEra> = signal({
         type: '',
         title: { headline: '' },
-        mainEventsBackground: { url: '', color: '' },
-        comparativeEventsBackground: { url: '', color: '' },
+        mainEventsBackground: { url: '', color: '', position: 'center' },
+        comparativeEventsBackground: { url: '', color: '', position: 'center' },
         eventGroups: [],
         backgroundAudios: [],
     });
@@ -408,7 +408,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
             id: era.id ?? 0,
             title: era.title?.headline ?? '',
             eventGroupIndex: this.flattendEventGroups.findIndex((group) => group.eraId === era.id),
-            background: era.mainEventsBackground || { url: '', color: '' },
+            background: era.mainEventsBackground || { url: '', color: '', position: 'center' },
         }));
     }
 

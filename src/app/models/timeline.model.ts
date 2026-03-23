@@ -34,6 +34,7 @@ export interface TimelineBackground {
     url?: string;
     color?: string;
     credit?: string;
+    position?: 'center' | 'top' | 'bottom' | 'left' | 'right';
 }
 
 export interface TimelineEventImage {

@@ -11,7 +11,8 @@
                 "headline": "My Cool Timelines App"
             },
             "mainEventsBackground": {
-                "url": "images/bg-main.jpg"
+                "url": "images/bg-main.jpg",
+                "position": "center"
             }
         },
         {
@@ -19,7 +20,8 @@
                 "headline": "The Classical Age"
             },
             "mainEventsBackground": {
-                "url": "images/bg-classical-main.jpg"
+                "url": "images/bg-classical-main.jpg",
+                "position": "center"
             },
             "comparativeEventsBackground": {
                 "url": "images/bg-classical-comp.jpg",
