@@ -68,6 +68,9 @@
                     <img
                         [src]="era.background.url"
                         class="w-full h-full object-cover"
+                        [style.backgroundPosition]="
+                            era.background.position ?? 'center'
+                        "
                         alt="Background {{ era.id }}"
                     />
                     <span

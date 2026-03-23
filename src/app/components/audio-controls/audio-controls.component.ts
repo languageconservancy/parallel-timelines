@@ -16,18 +16,17 @@ export class AudioControlsComponent implements OnInit, OnDestroy {
         volume: 0.5,
         isMuted: false,
     };
+    public isExpanded: boolean = false;
 
     private audioSubscription: Subscription | null = null;
-    private lastVolume: number = 0.5; // Store the last volume before muting
+    private lastVolume: number = 0.5;
 
     constructor(private audioService: AudioService) {}
 
     ngOnInit(): void {
-        this.audioSubscription = this.audioService.audioState$.subscribe(
-            (state) => {
-                this.audioState = state;
-            }
-        );
+        this.audioSubscription = this.audioService.audioState$.subscribe((state) => {
+            this.audioState = state;
+        });
     }
 
     ngOnDestroy(): void {
@@ -69,7 +68,11 @@ export class AudioControlsComponent implements OnInit, OnDestroy {
     onVolumeChange(event: Event): void {
         const target = event.target as HTMLInputElement;
         const volume = parseFloat(target.value);
-        this.lastVolume = volume; // Update last volume
+        this.lastVolume = volume;
         this.audioService.setVolume(volume);
+    }
+
+    toggleExpanded(): void {
+        this.isExpanded = !this.isExpanded;
     }
 }

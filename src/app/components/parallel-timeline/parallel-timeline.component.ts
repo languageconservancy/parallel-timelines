@@ -65,8 +65,8 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
     public currentEra: WritableSignal<TimelineEra> = signal({
         type: '',
         title: { headline: '' },
-        mainEventsBackground: { url: '', color: '' },
-        comparativeEventsBackground: { url: '', color: '' },
+        mainEventsBackground: { url: '', color: '', position: 'center' },
+        comparativeEventsBackground: { url: '', color: '', position: 'center' },
         eventGroups: [],
         backgroundAudios: [],
     });
@@ -328,6 +328,8 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
                         id: -1,
                         eraId: era.id,
                         eraTitle: era.title,
+                        // Single "page" for eras with only a title
+                        eraPageNumber: 1,
                         type: 'titlePage',
                         mainEventsBackground: era.mainEventsBackground ?? undefined,
                         comparativeEventsBackground: era.comparativeEventsBackground ?? undefined,
@@ -337,15 +339,34 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
                 ];
             }
 
-            return groups.map((group) => ({
+            return groups.map((group, pageIndex) => ({
                 ...group,
                 eraId: era.id,
                 type: 'eventGroups',
                 eraTitle: era.title,
+                // 1-based page number within the current era
+                eraPageNumber: pageIndex + 1,
                 mainEventsBackground: era.mainEventsBackground ?? undefined,
                 comparativeEventsBackground: era.comparativeEventsBackground ?? undefined,
             }));
         });
+    }
+
+    /**
+     * Current 1-based page number within the currently visible era.
+     */
+    currentEraPageNumber(): number {
+        const group = this.flattendEventGroups?.[this.currentFlatGroupIndex()];
+        return group?.eraPageNumber ?? 1;
+    }
+
+    /**
+     * Total number of "event pages" (eventGroups) within the currently visible era.
+     */
+    currentEraTotalPages(): number {
+        const currentEraId = this.currentEra().id;
+        const era = this.timelineData?.eras.find((e) => e.id === currentEraId);
+        return era?.eventGroups?.length ?? 1;
     }
 
     /**
@@ -387,7 +408,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
             id: era.id ?? 0,
             title: era.title?.headline ?? '',
             eventGroupIndex: this.flattendEventGroups.findIndex((group) => group.eraId === era.id),
-            background: era.mainEventsBackground || { url: '', color: '' },
+            background: era.mainEventsBackground || { url: '', color: '', position: 'center' },
         }));
     }
 

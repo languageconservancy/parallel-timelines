@@ -16,12 +16,31 @@
     ></div>
 } @else {
     <!-- Era Title -->
-    <div
-        #eraTitleRef
-        class="absolute left-4 md:left-6 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-2xl top-[max(4rem,env(safe-area-inset-top))] md:top-[max(1.5rem,env(safe-area-inset-top))] z-30 cursor-pointer"
-        [innerHTML]="currentEra().title?.headline"
-        (click)="onEraTitleClick()"
-    ></div>
+    @if (true) {
+        <div
+            #eraTitleRef
+            class="absolute left-4 md:left-6 flex flex-col gap-1 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-2xl top-[max(1rem,env(safe-area-inset-top))] z-30 cursor-pointer"
+            (click)="onEraTitleClick()"
+        >
+            <div [innerHTML]="currentEra().title?.headline"></div>
+            <!-- page number within this era -->
+            <div class="text-sm text-gray-500 text-center font-medium">
+                ({{ currentEraPageNumber() }} / {{ currentEraTotalPages() }})
+            </div>
+        </div>
+    } @else {
+        <span
+            #eraTitleRef
+            class="absolute left-4 md:left-6 flex flex-row items-center gap-2 text-nowrap bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-2xl top-[max(1rem,env(safe-area-inset-top))] z-30 cursor-pointer"
+            (click)="onEraTitleClick()"
+        >
+            <span [innerHTML]="currentEra().title?.headline"></span>
+            <!-- page number within this era -->
+            <span class="text-sm text-gray-500 font-medium">
+                ({{ currentEraPageNumber() }} / {{ currentEraTotalPages() }})
+            </span>
+        </span>
+    }
 }
 <app-bottom-drawer
     [currentEraIndex]="currentEra().id"

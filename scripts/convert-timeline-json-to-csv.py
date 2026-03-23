@@ -20,6 +20,7 @@ def convert_json_to_csv(input_file):
         'Era Title',
         'Main Background',
         'Main Background Credit',
+        'Main Background Position',
         'Comparative Background',
         'Comparative Background Color',
         'Group Title',
@@ -42,6 +43,7 @@ def convert_json_to_csv(input_file):
             era_title = era.get('title', {}).get('headline', '')
             main_background_url = era.get('mainEventsBackground', {}).get('url', '')
             main_background_credit = era.get('mainEventsBackground', {}).get('credit', '')
+            main_background_position = era.get('mainEventsBackground', {}).get('position', '')
             comparative_background = era.get('comparativeEventsBackground', {}).get('url', '')
             comparative_background_color = era.get('comparativeEventsBackground', {}).get('color', '')
             background_audios = '; '.join([audio.get('url', '') for audio in era.get('backgroundAudios', [])])
@@ -55,6 +57,7 @@ def convert_json_to_csv(input_file):
                     'Era Title': era_title,
                     'Main Background': main_background_url,
                     'Main Background Credit': main_background_credit,
+                    'Main Background Position': main_background_position,
                     'Background Audios': background_audios,
                 })
                 order += 1
@@ -70,6 +73,7 @@ def convert_json_to_csv(input_file):
                         'Era Title': era_title,
                         'Main Background': main_background_url,
                         'Main Background Credit': main_background_credit,
+                        'Main Background Position': main_background_position,
                         'Comparative Background': comparative_background,
                         'Comparative Background Color': comparative_background_color,
                         'Group Title': group_title,

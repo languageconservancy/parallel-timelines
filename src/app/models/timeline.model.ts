@@ -34,6 +34,7 @@ export interface TimelineBackground {
     url?: string;
     color?: string;
     credit?: string;
+    position?: 'center' | 'top' | 'bottom' | 'left' | 'right';
 }
 
 export interface TimelineEventImage {
@@ -45,6 +46,7 @@ export interface TimelineEventImage {
 export interface TimelineFlattenedEventGroup {
     type?: string;
     id?: number;
+    eraPageNumber?: number;
     eraId?: number;
     eraTitle?: { headline?: string };
     singleBackground?: TimelineBackground;
@@ -65,4 +67,3 @@ export interface DrawerCard {
 export interface TimelineBackgroundAudio {
     url: string;
 }
-
