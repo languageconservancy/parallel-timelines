@@ -37,15 +37,29 @@
 <app-audio-controls />
 
 <!-- Background image credit — rendered here (not inside app-background) so it escapes the z-10 stacking context.
-     Pinned between top (below era title) and bottom-[55%] (above the arrow at top-1/2) so it never clashes with navigation. -->
+     Expands horizontally to the left (extra columns of vertical text).
+     Right tap zone starts at 42% so this upper-right area is free for credit interaction. -->
 @if (currentEra().mainEventsBackground?.credit) {
-    <p
-        class="fixed right-0 top-[max(5rem,env(safe-area-inset-top))] bottom-[55%] overflow-hidden z-30 pointer-events-none text-xs text-white/70 bg-black/25 backdrop-blur-sm px-1 py-2 rounded-l select-none"
-        style="writing-mode: vertical-rl"
+    <div
+        class="fixed right-0 top-[max(5rem,env(safe-area-inset-top))] bottom-[55%] z-30 flex flex-col text-xs text-white/70 bg-black/25 backdrop-blur-sm rounded-l select-none cursor-pointer overflow-hidden transition-[max-width] duration-300 ease-in-out"
+        [style.maxWidth]="creditExpanded ? '8rem' : '1.5rem'"
+        (click)="creditExpanded = !creditExpanded"
     >
-        Image:
-        <span [innerHTML]="currentEra().mainEventsBackground?.credit"></span>
-    </p>
+        <!-- Credit text — vertical right-to-left columns -->
+        <div
+            class="flex-1 overflow-hidden px-1 py-2"
+            style="writing-mode: vertical-rl"
+        >
+            Image:
+            <span
+                [innerHTML]="currentEra().mainEventsBackground?.credit"
+            ></span>
+        </div>
+        <!-- Expand / collapse indicator: ◀ = expand left, ▶ = collapse right -->
+        <div class="text-center pb-1 text-white/50 text-[9px] leading-none">
+            {{ creditExpanded ? "▶" : "◀" }}
+        </div>
+    </div>
 }
 
 <!-- Left and right arrows -->
@@ -75,7 +89,7 @@
 }
 @if (currentFlatGroupIndex() < flattendEventGroups.length - 1) {
     <div
-        class="fixed top-0 right-0 bottom-[5rem] w-16 z-[25] cursor-pointer"
+        class="fixed top-[42%] right-0 bottom-[5rem] w-16 z-[25] cursor-pointer"
         (click)="onArrowClick('right')"
     ></div>
 }

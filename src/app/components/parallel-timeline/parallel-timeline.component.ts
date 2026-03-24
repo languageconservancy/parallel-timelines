@@ -72,6 +72,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
     });
     private isProgrammaticScroll: boolean = false;
     public drawerCards: DrawerCard[] = [];
+    public creditExpanded: boolean = false;
     @ViewChild('eraTitleRef') eraTitleRef!: ElementRef<HTMLDivElement>;
     @ViewChild('timelineScrollRef')
     timelineScrollRef!: ElementRef<HTMLDivElement>;
@@ -486,6 +487,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
 
         this.previousEraIndex.set(this.currentFlatGroupIndex());
         this.currentFlatGroupIndex.set(index);
+        this.creditExpanded = false;
     }
 
     /**
