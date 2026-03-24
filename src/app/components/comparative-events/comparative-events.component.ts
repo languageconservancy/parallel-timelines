@@ -7,7 +7,7 @@ import { ComparativeEventComponent } from '../comparative-event/comparative-even
     selector: 'app-comparative-events',
     imports: [ComparativeEventComponent, CommonModule],
     templateUrl: './comparative-events.component.html',
-    styleUrl: './comparative-events.component.scss'
+    styleUrl: './comparative-events.component.scss',
 })
 export class ComparativeEventsComponent {
     @Input() events!: TimelineEvent[];
