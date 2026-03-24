@@ -75,7 +75,6 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
     @ViewChild('eraTitleRef') eraTitleRef!: ElementRef<HTMLDivElement>;
     @ViewChild('timelineScrollRef')
     timelineScrollRef!: ElementRef<HTMLDivElement>;
-    @ViewChild(BottomDrawerComponent) bottomDrawerRef!: BottomDrawerComponent;
     private scrollTimeout?: number = 0;
     private lastScrollLeft: number = 0;
     private touchStartX: number = 0;
@@ -533,11 +532,4 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
         this.scrollToGroup(index);
     }
 
-    /**
-     * Handle the click event for the era title
-     */
-    onEraTitleClick() {
-        console.log('onEraTitleClick');
-        this.bottomDrawerRef.toggleDrawerVisibility();
-    }
 }
