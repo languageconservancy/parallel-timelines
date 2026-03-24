@@ -36,7 +36,6 @@ export class BottomDrawerComponent implements OnChanges, AfterViewInit {
     @Output() eraClicked = new EventEmitter<number>();
     @ViewChild('drawerScrollRef') drawerScrollRef!: ElementRef<HTMLDivElement>;
     @ViewChildren('eraButtonRef') eraButtonRef!: QueryList<ElementRef<HTMLDivElement>>;
-    public isOpen: boolean = true;
     public leftPadding: string = '0px'; //`${window.innerWidth}px`;
     public rightPadding: string = '0px'; //`${window.innerWidth}px`;
     public drawerWidth: string = '100vh'; //`${window.innerWidth}px`;
@@ -118,22 +117,6 @@ export class BottomDrawerComponent implements OnChanges, AfterViewInit {
             const walk = (x - startX) * 2; // Adjust scroll speed
             drawerScrollEl.scrollLeft = scrollLeft - walk;
         });
-    }
-
-    public toggleDrawerVisibility() {
-        this.isOpen = !this.isOpen;
-    }
-
-    public closeDrawer() {
-        // This method is called when the user clicks on the close button
-        // It hides the navigation bar
-        this.isOpen = false;
-    }
-
-    public openDrawer() {
-        // This method is called when the user clicks on the open button
-        // It shows the navigation bar
-        this.isOpen = true;
     }
 
     public onEraClick(eventGroupIndex: number) {
