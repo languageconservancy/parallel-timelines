@@ -58,7 +58,8 @@
         class="fixed right-0 top-[max(5rem,env(safe-area-inset-top))] bottom-[55%] overflow-hidden z-30 pointer-events-none text-xs text-white/70 bg-black/25 backdrop-blur-sm px-1 py-2 rounded-l select-none"
         style="writing-mode: vertical-rl"
     >
-        Image: <span [innerHTML]="currentEra().mainEventsBackground?.credit"></span>
+        Image:
+        <span [innerHTML]="currentEra().mainEventsBackground?.credit"></span>
     </p>
 }
 
@@ -76,6 +77,22 @@
         [direction]="'right'"
         class="absolute top-1/2 right-1 md:right-6 transform -translate-y-1/2 z-50"
     />
+}
+
+<!-- Edge tap zones: full-height strips on each side that mirror the arrow actions.
+     z-[25] sits above the scroll content (z-20) but below all other interactive UI (z-30+).
+     bottom-[5rem] avoids the bottom-drawer underlay which occupies that region at z-40. -->
+@if (currentFlatGroupIndex() > 0) {
+    <div
+        class="fixed top-0 left-0 bottom-[5rem] w-16 z-[25] cursor-pointer"
+        (click)="onArrowClick('left')"
+    ></div>
+}
+@if (currentFlatGroupIndex() < flattendEventGroups.length - 1) {
+    <div
+        class="fixed top-0 right-0 bottom-[5rem] w-16 z-[25] cursor-pointer"
+        (click)="onArrowClick('right')"
+    ></div>
 }
 
 <!-- Scrollable timeline (event groups) -->
