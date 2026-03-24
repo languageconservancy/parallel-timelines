@@ -51,6 +51,17 @@
 <!-- Audio Controls -->
 <app-audio-controls />
 
+<!-- Background image credit — rendered here (not inside app-background) so it escapes the z-10 stacking context.
+     Pinned between top (below era title) and bottom-[55%] (above the arrow at top-1/2) so it never clashes with navigation. -->
+@if (currentEra().mainEventsBackground?.credit) {
+    <p
+        class="fixed right-0 top-[max(5rem,env(safe-area-inset-top))] bottom-[55%] overflow-hidden z-30 pointer-events-none text-xs text-white/70 bg-black/25 backdrop-blur-sm px-1 py-2 rounded-l select-none"
+        style="writing-mode: vertical-rl"
+    >
+        Image: <span [innerHTML]="currentEra().mainEventsBackground?.credit"></span>
+    </p>
+}
+
 <!-- Left and right arrows -->
 @if (currentFlatGroupIndex() > 0) {
     <app-arrow

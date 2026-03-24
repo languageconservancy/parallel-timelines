@@ -16,15 +16,6 @@
                 mainEventsBackground?.position ?? 'center'
             "
         ></div>
-        <!-- Main background credit -->
-        @if (mainEventsBackground?.credit) {
-            <p
-                class="absolute bottom-12 md:bottom-16 right-4 md:right-10 text-xs text-gray-700 bg-white/60 backdrop-blur-sm px-2 mx-4 py-1 rounded"
-            >
-                Image by
-                <span [innerHTML]="mainEventsBackground?.credit"></span>
-            </p>
-        }
     </div>
 
     @if (eraType !== "titlePage") {
