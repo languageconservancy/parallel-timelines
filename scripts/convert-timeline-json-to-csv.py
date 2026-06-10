@@ -18,6 +18,7 @@ def convert_json_to_csv(input_file):
     fieldnames = [
         'Order',
         'Era Title',
+        'Era Subtitle',
         'Main Background',
         'Main Background Credit',
         'Main Background Position',
@@ -41,6 +42,7 @@ def convert_json_to_csv(input_file):
 
         for era in data.get('eras', []):
             era_title = era.get('title', {}).get('headline', '')
+            era_subtitle = era.get('subtitle', '')
             main_background_url = era.get('mainEventsBackground', {}).get('url', '')
             main_background_credit = era.get('mainEventsBackground', {}).get('credit', '')
             main_background_position = era.get('mainEventsBackground', {}).get('position', '')
@@ -55,6 +57,7 @@ def convert_json_to_csv(input_file):
                 writer.writerow({
                     'Order': order,
                     'Era Title': era_title,
+                    'Era Subtitle': era_subtitle,
                     'Main Background': main_background_url,
                     'Main Background Credit': main_background_credit,
                     'Main Background Position': main_background_position,
@@ -71,6 +74,7 @@ def convert_json_to_csv(input_file):
                     writer.writerow({
                         'Order': order,
                         'Era Title': era_title,
+                        'Era Subtitle': era_subtitle,
                         'Main Background': main_background_url,
                         'Main Background Credit': main_background_credit,
                         'Main Background Position': main_background_position,
@@ -92,6 +96,7 @@ def convert_json_to_csv(input_file):
                     writer.writerow({
                         'Order': order,
                         'Era Title': era_title,
+                        'Era Subtitle': era_subtitle,
                         'Main Background': main_background_url,
                         'Main Background Credit': main_background_credit,
                         'Comparative Background': comparative_background,

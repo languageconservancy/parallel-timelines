@@ -8,22 +8,27 @@
     />
 </div>
 @if (currentEra().type === "titlePage") {
-    <!-- Centered title -->
+    <!-- Centered Title Page Title -->
     <div
         #eraTitleRef
         class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-3 rounded-xl bg-white/75 text-blue-900 font-bold text-6xl pointer-events-none"
         [innerHTML]="currentEra().title?.headline"
     ></div>
 } @else {
-    <!-- Era Title -->
+    <!-- Normal Era Title -->
     <div
         #eraTitleRef
-        class="absolute left-4 md:left-6 flex flex-col gap-1 text-nowrap w-fit bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-2xl top-[max(1rem,env(safe-area-inset-top))] z-30"
+        class="absolute left-4 md:left-6 w-fit max-w-[calc(100vw-4rem)] sm:max-w-[calc(100vw-3rem)] bg-white/75 p-3 rounded-xl text-blue-900 font-bold text-2xl top-[max(1rem,env(safe-area-inset-top))] z-30"
     >
-        <div [innerHTML]="currentEra().title?.headline"></div>
-        <!-- page number within this era -->
-        <div class="text-sm text-gray-500 text-center font-medium">
-            ({{ currentEraPageNumber() }} / {{ currentEraTotalPages() }})
+        <div class="w-fit flex flex-col items-start gap-0.5 sm:block">
+            <span [innerHTML]="currentEra().title?.headline"></span>
+            @if (currentEra().subtitle) {
+                <span class="hidden sm:inline"> | </span>
+                <span class="text-sm italic sm:inline">“<span [innerHTML]="currentEra().subtitle"></span>”</span>
+            }
+            <span class="block w-full text-center text-sm text-gray-500 font-medium sm:inline sm:w-auto sm:text-left sm:ml-1">
+                ({{ currentEraPageNumber() }} / {{ currentEraTotalPages() }})
+            </span>
         </div>
     </div>
 }
