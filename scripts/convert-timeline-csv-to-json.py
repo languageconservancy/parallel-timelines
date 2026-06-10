@@ -36,6 +36,9 @@ def convert_csv_to_json(input_file, output_file=None):
                 'eventGroups': [],
                 'backgroundAudios': []
             }
+            era_subtitle = row.get('Era Subtitle', '').strip()
+            if era_subtitle:
+                current_era['subtitle'] = era_subtitle
             if row['Background Audios']:
                 # handle semi-colon separated list of background audios
                 background_audios = row['Background Audios'].split(';')

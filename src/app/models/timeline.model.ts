@@ -7,6 +7,7 @@ export interface TimelineEra {
     id?: number;
     type?: string;
     title?: { headline?: string };
+    subtitle?: string;
     mainEventsBackground?: TimelineBackground;
     comparativeEventsBackground?: TimelineBackground;
     eventGroups: TimelineEventGroup[];
