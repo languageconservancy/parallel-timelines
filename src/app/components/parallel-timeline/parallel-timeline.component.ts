@@ -331,6 +331,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
                         // Single "page" for eras with only a title
                         eraPageNumber: 1,
                         type: 'titlePage',
+                        eraSubtitle: era.subtitle ?? undefined,
                         mainEventsBackground: era.mainEventsBackground ?? undefined,
                         comparativeEventsBackground: era.comparativeEventsBackground ?? undefined,
                         mainEvents: [],
@@ -344,6 +345,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
                 eraId: era.id,
                 type: 'eventGroups',
                 eraTitle: era.title,
+                eraSubtitle: era.subtitle,
                 // 1-based page number within the current era
                 eraPageNumber: pageIndex + 1,
                 mainEventsBackground: era.mainEventsBackground ?? undefined,
@@ -480,6 +482,7 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
             id: eventGroup.eraId,
             type: eventGroup.type,
             title: eventGroup.eraTitle,
+            subtitle: currentEraData?.subtitle,
             mainEventsBackground: eventGroup.mainEventsBackground,
             comparativeEventsBackground: eventGroup.comparativeEventsBackground,
             eventGroups: [],
