@@ -81,6 +81,8 @@ export class ParallelTimelineComponent implements AfterViewInit, OnDestroy {
     private touchStartX: number = 0;
     private touchEndX: number = 0;
     public isMobileOrTablet: boolean = this.deviceService.isMobile() || this.deviceService.isTablet();
+    public isIphone: boolean =
+        this.deviceService.getDeviceInfo().device === 'iPhone' || /iPhone|iPod/.test(navigator.userAgent);
     private verticalScrollCounter: number = 0;
     private verticalScrollBuffer: number = 15;
     private timelinePath: string = 'timelines/timeline.json';
